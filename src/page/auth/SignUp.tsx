@@ -53,7 +53,7 @@ const SignUp = () => {
     }
     if (password !== repassword) {
       NotificationManager.error(
-        "Password doesn't match! Check your password agagin.",
+        "Password doesn't match! Check your password again!",
         'Error!',
         3000,
       );

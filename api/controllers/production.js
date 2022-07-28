@@ -326,7 +326,7 @@ router.post('/generate_config', async (req, res) => {
   console.log('***** generating config file *****');
   fs.writeFile(
     `./config_metadata/uploaded_batch_data/${req.body.id}/config.json`,
-    JSON.stringify(req.body, null, 2),
+    JSON.stringify(req.body.data, null, 2),
     function (err) {
       if (err) throw err;
       console.log('config.json is created successfully.');
