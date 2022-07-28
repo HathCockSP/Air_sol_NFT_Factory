@@ -38,25 +38,28 @@ const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare}:an
 
   const generateConfig = () => {
     if (config.price === null) {
-      NotificationManager.warning('Please input price!', 'Alert!', 3000);
+      NotificationManager.error('Please input price!', 'Error!', 3000);
       return;
     }
     if (config.number === null) {
-      NotificationManager.warning('Please input number!', 'Alert!', 3000);
+      NotificationManager.error('Please input number!', 'Error!', 3000);
       return;
     }
     if (
       config.solTreasuryAccount === null ||
       config.solTreasuryAccount === ''
     ) {
-      NotificationManager.warning(
+      NotificationManager.error(
         'Please input solTreasuryAccount!',
-        'Alert!',
+        'Error!',
         3000,
       );
       return;
     }
 
+    if (config.number !== sSelectedIDs) {
+      NotificationManager.warning("This number isn't matched with selectd IDS, Are you Okay?", 'Warning!', 3000);
+    }
     set_flag_step_prepare(2);
     generate_config(id,config);
     setFlagStep(4);
@@ -125,18 +128,6 @@ const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare}:an
               <Text01>number:</Text01>
               <Input01
                 component={'input'}
-                // {...{ type: 'text' }}
-                // {...{ value: config.number === null ||config.number ===NaN ? '' : config.number }}
-                // {...{ pattern: '[0-9]*' }}
-                // {...{ placeholder: 'total amount to mint NFTs.' }}
-                // onChange={(e: any) => {
-                //   e.target.validity.valid &&
-                //     set_config({
-                //       ...config,
-                //       ...{ number: parseInt(e.target.value) },
-                //     });
-                //   e.target.validity.valid && set_count(parseInt(e.target.value));
-                // }}
                 {...{ type: 'number' }}
                 {...{
                   value: config.number === null ? '' : config.number,

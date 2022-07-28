@@ -30,6 +30,7 @@ const CMSBatch = () => {
   const [sBatchData, set_sBatchData] = useState<any>();
   const [sSelectedIDs, set_sSelectedIDs] = useState<any>(0);
   const [flagStep, setFlagStep] = useState<any>(0);
+  const [mintCount, setMintCount] = useState<any>(0);
 
   const [id, setId] = useState<any>();
 
@@ -88,6 +89,7 @@ const CMSBatch = () => {
                     setFlagStep={setFlagStep}
                     set_flag_step_prepare={set_flag_step_prepare}
                     id={id}
+                    setMintCount={setMintCount}
                   />
                 ) : flagStep === 4 ? (
                   <UploadNFT
@@ -105,7 +107,7 @@ const CMSBatch = () => {
                     setFlagStep={setFlagStep}
                     set_flag_step_mintNFT={set_flag_step_mintNFT}
                     id={id}
-                    sSelectedIDs={sSelectedIDs}
+                    mintCount={mintCount}
                   />
                 ) : (
                   <></>

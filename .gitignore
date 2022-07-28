@@ -10,7 +10,6 @@ yarn.lock
 api/node_modules
 api/yarn.lock
 api/package-lock.json
-.env
 .cache
 api/cli/node_modules
 api/cli/package-lock.json
