@@ -1,0 +1,25 @@
+.extraClass {
+  width: 400px !important;
+  font-size: 20px !important;
+  color: white !important;
+  /* background-color: #54c3e7 !important; */
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  &:hover {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+.extraClass1 {
+  /* width: 300px !important; */
+  font-size: 20px !important;
+  color: white !important;
+  /* background-color: #54c3e7 !important; */
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  &:hover {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
