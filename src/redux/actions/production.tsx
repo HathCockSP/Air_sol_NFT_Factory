@@ -32,8 +32,8 @@ export function uploadLocal(id:any,sBatchName: any, batch_list_data: any) {
     });
 }
 
-export function generate_config(data: any) {
-  axios.post('/api/production/generate_config', data).then(res => {
+export function generate_config(id:any, data: any) {
+  axios.post('/api/production/generate_config', {id,data}).then(res => {
     if (res.data.success) alert('success');
     else alert('error occur');
   });
@@ -47,8 +47,8 @@ export function getAssets(id:any) {
   });
 }
 
-export function upload_nft() {
-  return axios.post('/api/production/upload_nft').then(res => {
+export function upload_nft(id:any) {
+  return axios.post('/api/production/upload_nft',{id}).then(res => {
     return res.data;
     // if (res.data.success) {
     //   return res.data;
@@ -65,8 +65,8 @@ export function verify_nft() {
   });
 }
 
-export function mint_nft(count: any) {
-  return axios.post('/api/production/mint_nft', { count }).then(res => {
+export function mint_nft(id:any,count: any) {
+  return axios.post('/api/production/mint_nft', { id,count }).then(res => {
     return res.data;
   });
 }

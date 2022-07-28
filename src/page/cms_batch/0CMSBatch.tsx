@@ -99,7 +99,6 @@ const CMSBatch = () => {
                   <VerifyNFT
                     setFlagStep={setFlagStep}
                     set_flag_step_verifyNFT={set_flag_step_verifyNFT}
-                    id={id}
                   />
                 ) : flagStep === 6 ? (
                   <MintNFT

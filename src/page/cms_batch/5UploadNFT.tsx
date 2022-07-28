@@ -1,29 +1,29 @@
-import { useState } from 'react';
-import { Box } from '@material-ui/core';
-import styled from 'styled-components';
+import { useState } from "react";
+import { Box } from "@material-ui/core";
+import styled from "styled-components";
 
 import {
   NotificationContainer,
   NotificationManager,
-} from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
-import { upload_nft } from '../../redux/actions/production';
+import { upload_nft } from "../../redux/actions/production";
 
-const UploadNFT = ({ setFlagStep, set_flag_step_uploadNFT }: any) => {
+const UploadNFT = ({ setFlagStep, set_flag_step_uploadNFT, id }: any) => {
   const [progress, setProgress] = useState<any>(0);
   const [flagProcessBtn, setFlagProcessBtn] = useState<any>(false);
 
   const uploadNFT = () => {
     setFlagProcessBtn(true);
     if (flagProcessBtn === true) {
-      NotificationManager.error('Please wait while processing.', 'Hi.', 3000);
+      NotificationManager.error("Please wait while processing.", "Hi.", 3000);
       return;
     }
     set_flag_step_uploadNFT(1);
-    upload_nft().then(res => {
+    upload_nft(id).then((res) => {
       if (res.success) {
         const timer = setInterval(() => {
           setProgress((oldProgress: any) => {
@@ -42,8 +42,7 @@ const UploadNFT = ({ setFlagStep, set_flag_step_uploadNFT }: any) => {
         return () => {
           clearInterval(timer);
         };
-      }
-      else {
+      } else {
         setFlagProcessBtn(false);
         set_flag_step_uploadNFT(3);
         return;
@@ -63,33 +62,33 @@ const UploadNFT = ({ setFlagStep, set_flag_step_uploadNFT }: any) => {
               // Path color
               stroke: `rgba(84, 195, 231, 1)`,
               // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-              strokeLinecap: 'butt',
+              strokeLinecap: "butt",
               // Customize transition animation
-              transition: 'stroke-dashoffset 0.5s ease 0s',
+              transition: "stroke-dashoffset 0.5s ease 0s",
               // Rotate the path
 
-              transformOrigin: 'center center',
+              transformOrigin: "center center",
             },
             // Customize the circle behind the path, i.e. the "total progress"
             trail: {
               // Trail color
-              stroke: 'white',
+              stroke: "white",
               // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-              strokeLinecap: 'butt',
+              strokeLinecap: "butt",
               // Rotate the trail
-              transformOrigin: 'center center',
+              transformOrigin: "center center",
             },
             // Customize the text
             text: {
               // Text color
-              fill: 'white',
+              fill: "white",
               // Text size
-              fontSize: '25px',
-              fontWeight: 'bold',
+              fontSize: "25px",
+              fontWeight: "bold",
             },
             // Customize background - only used when the `background` prop is true
             background: {
-              fill: '#3e98c7',
+              fill: "#3e98c7",
             },
           }}
         />

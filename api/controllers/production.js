@@ -325,7 +325,7 @@ router.post('/uploadLocal', async (req, res) => {
 router.post('/generate_config', async (req, res) => {
   console.log('***** generating config file *****');
   fs.writeFile(
-    './config_metadata/config.json',
+    `./config_metadata/uploaded_batch_data/${req.body.id}/config.json`,
     JSON.stringify(req.body, null, 2),
     function (err) {
       if (err) throw err;
@@ -378,14 +378,14 @@ router.post('/upload_nft', async (req, res) => {
   const startTime = new Date();
   console.log('uploading nft...');
   exec(
-    'ts-node ../../cli/src/candy-machine-v2-cli.ts upload -e devnet -k ~/.config/solana/devnet.json -nc -cp ./config_metadata/config.json -c example ./config_metadata/metadata_assets/',
+    `ts-node ./cli/src/candy-machine-v2-cli.ts upload -e devnet -k ~/.config/solana/devnet.json -nc -cp ./config_metadata/uploaded_batch_data/${req.body.id}/config.json -c example ./config_metadata/uploaded_batch_data/${req.body.id}/assets`,
     error => {
       const endTime = new Date();
       const exeTime = endTime - startTime;
       if (error) {
         console.log(error);
-        // return res.json({ success: false });
-        return res.json({ success: true, exeTime: exeTime });
+        return res.json({ success: false });
+        // return res.json({ success: true, exeTime: exeTime });
       }
       console.log('Success uploaded NFT.');
       return res.json({ success: true, exeTime: exeTime });
@@ -397,7 +397,7 @@ router.post('/verify_nft', (req, res) => {
   const startTime = new Date();
   console.log('verifying nft...');
   exec(
-    'ts-node ../../cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json -c example',
+    'ts-node ./cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json -c example',
     error => {
       const endTime = new Date();
       const exeTime = endTime - startTime;
@@ -415,7 +415,7 @@ router.post('/mint_nft', (req, res) => {
   const startTime = new Date();
   console.log('minting nft...');
   exec(
-    `ts-node ../../cli/src/candy-machine-v2-cli.ts mint_multiple_tokens -e devnet -k ~/.config/solana/devnet.json -c example --number ${req.body.count}`,
+    `ts-node ./cli/src/candy-machine-v2-cli.ts mint_multiple_tokens -e devnet -k ~/.config/solana/devnet.json -c example --number ${req.body.count}`,
     error => {
       const endTime = new Date();
       const exeTime = endTime - startTime;

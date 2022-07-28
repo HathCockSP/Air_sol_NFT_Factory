@@ -1,7 +1,6 @@
 import { Box } from '@material-ui/core';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { generate_config } from '../../redux/actions/production';
 import { MdOutlineImportantDevices } from 'react-icons/md';
 import { BsFileCode } from 'react-icons/bs';
@@ -15,8 +14,7 @@ import {
 } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
-const PrepareConfig = ({sSelectedIDs, setFlagStep, set_flag_step_prepare}:any) => {
-  let navigate = useNavigate();
+const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare}:any) => {
 
   const [config, set_config] = useState<any>({
     price: null,
@@ -60,7 +58,7 @@ const PrepareConfig = ({sSelectedIDs, setFlagStep, set_flag_step_prepare}:any) =
     }
 
     set_flag_step_prepare(2);
-    generate_config(config);
+    generate_config(id,config);
     setFlagStep(4);
     // navigate('/generate_metadata');
     // window.scrollTo(0, 0);
