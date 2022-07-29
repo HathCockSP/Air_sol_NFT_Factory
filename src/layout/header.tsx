@@ -9,6 +9,7 @@ import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { MdAccountBalanceWallet } from 'react-icons/md';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import jwtDecode from 'jwt-decode'
+import { shortenAddress} from '../candy-machine'
 
 import * as anchor from '@project-serum/anchor';
 
@@ -46,7 +47,6 @@ const Header = () => {
     (async () => {
       if (anchorWallet) {
         const balance = await connection.getBalance(anchorWallet!.publicKey);
-        console.log(balance);
         setBalance(balance / LAMPORTS_PER_SOL);
       }
     })();
@@ -166,7 +166,7 @@ const Header = () => {
               </Box>
             </ConnectButton>
           ) : (
-            <ConnectButton>Connected</ConnectButton>
+            <ConnectButton>{wallet.connected && (shortenAddress(wallet.publicKey + " "))}</ConnectButton>
           )}
           <SignOutBtn
             onClick={() => {
