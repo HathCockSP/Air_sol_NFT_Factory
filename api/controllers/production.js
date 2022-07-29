@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const Axios = require('axios');
-const { exec, execSync } = require('child_process');
+const { exec } = require('child_process');
 const productionModel = require('../mongodb_scheme/production');
 
 router.get('/get_batch_list', async (req, res) => {
@@ -52,6 +52,16 @@ router.post('/get_batch_data', async (req, res) => {
 });
 
 router.post('/download_batch', async (req, res) => {
+  if (!fs.existsSync(`./config_metadata`)) {
+    fs.mkdirSync(`./config_metadata`, {
+      recursive: true,
+    });
+  }
+  if (!fs.existsSync(`./config_metadata/batch_data`)) {
+    fs.mkdirSync(`./config_metadata/batch_data`, {
+      recursive: true,
+    });
+  }
   if (!fs.existsSync(`./config_metadata/batch_data/${req.body.batch_name}`)) {
     fs.mkdirSync(`./config_metadata/batch_data/${req.body.batch_name}`, {
       recursive: true,
@@ -224,15 +234,18 @@ router.post('/download_batch', async (req, res) => {
     created_date: new Date().toLocaleString()
   });
   newProduction.save(function (err, added) {
-    if (err) console.log(err);
+    if (err) 
+    {
+      res.send({ flag_success: 'failed', error: err});
+
+      console.log(err);
+    }
     else{
       res.send({ flag_success: 'success', id: added._id });
       console.log('******** saved in mongo database successfully *********');
     }
   });
   console.log('******** download batch successfully *********');
-
-
 });
 
 router.post('/uploadLocal', async (req, res) => {
@@ -378,7 +391,7 @@ router.post('/upload_nft', async (req, res) => {
   const startTime = new Date();
   console.log('uploading nft...');
   exec(
-    `ts-node ./cli/src/candy-machine-v2-cli.ts upload -e devnet -k ~/.config/solana/devnet.json -nc -cp ./config_metadata/uploaded_batch_data/${req.body.id}/config.json -c example ./config_metadata/uploaded_batch_data/${req.body.id}/assets`,
+    `ts-node ./cli/src/candy-machine-v2-cli.ts upload -e devnet -k ~/.config/solana/devnet.json -nc -cp ./config_metadata/uploaded_batch_data/${req.body.id}/config.json -c ${req.body.id} ./config_metadata/uploaded_batch_data/${req.body.id}/assets`,
     error => {
       const endTime = new Date();
       const exeTime = endTime - startTime;
@@ -397,7 +410,7 @@ router.post('/verify_nft', (req, res) => {
   const startTime = new Date();
   console.log('verifying nft...');
   exec(
-    'ts-node ./cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json -c example',
+    `ts-node ./cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json -c ${req.body.id}`,
     error => {
       const endTime = new Date();
       const exeTime = endTime - startTime;
@@ -415,7 +428,7 @@ router.post('/mint_nft', (req, res) => {
   const startTime = new Date();
   console.log('minting nft...');
   exec(
-    `ts-node ./cli/src/candy-machine-v2-cli.ts mint_multiple_tokens -e devnet -k ~/.config/solana/devnet.json -c example --number ${req.body.count}`,
+    `ts-node ./cli/src/candy-machine-v2-cli.ts mint_multiple_tokens -e devnet -k ~/.config/solana/devnet.json -c ${req.body.id} --number ${req.body.count}`,
     error => {
       const endTime = new Date();
       const exeTime = endTime - startTime;

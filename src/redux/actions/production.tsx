@@ -56,8 +56,8 @@ export function upload_nft(id:any) {
   });
 }
 
-export function verify_nft() {
-  return axios.post('/api/production/verify_nft').then(res => {
+export function verify_nft(id:any) {
+  return axios.post('/api/production/verify_nft', {id}).then(res => {
     return res.data;
     // if (res.data.success) {
     //   return res.data;

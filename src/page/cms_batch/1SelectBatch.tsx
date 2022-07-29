@@ -154,7 +154,7 @@ const SelectBatch = ({
       return;
     }
     if (batch_list.length === 0) {
-      NotificationManager.error("Can't find any batch in cms.", 'Hi.', 3000);
+      NotificationManager.error("Can't get any batch in cms.", 'Hi.', 3000);
       return;
     }
     set_flag_downbtn(true);

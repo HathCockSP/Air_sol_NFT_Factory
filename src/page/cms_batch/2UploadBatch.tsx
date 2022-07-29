@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import _ from 'lodash';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import styled from 'styled-components';
-import { download_batch, uploadLocal } from '../../redux/actions/production';
-import { get_batch_list, get_batch_data } from '../../redux/actions/production';
+import { uploadLocal } from '../../redux/actions/production';
 import { RiFolderUploadLine } from 'react-icons/ri';
 import { FaAws } from 'react-icons/fa';
 import {

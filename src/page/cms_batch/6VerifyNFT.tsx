@@ -11,7 +11,7 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { verify_nft } from '../../redux/actions/production';
 
-const VerifyNFT = ({ setFlagStep, set_flag_step_verifyNFT }: any) => {
+const VerifyNFT = ({ id, setFlagStep, set_flag_step_verifyNFT }: any) => {
   const [progress, setProgress] = useState<any>(0);
   const [flagProcessBtn, setFlagProcessBtn] = useState<any>(false);
 
@@ -22,7 +22,7 @@ const VerifyNFT = ({ setFlagStep, set_flag_step_verifyNFT }: any) => {
       return;
     }
     set_flag_step_verifyNFT(1);
-    verify_nft().then(res => {
+    verify_nft(id).then(res => {
       if (res.success) {
         const timer = setInterval(() => {
           setProgress((oldProgress: any) => {
