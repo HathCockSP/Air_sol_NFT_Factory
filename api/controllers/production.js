@@ -296,8 +296,7 @@ router.post('/uploadLocal', async (req, res) => {
       let jsonDate;
       try {  
         jsonDate = JSON.parse(readFile);
-      } catch (e) {  
-        console.log('invalid json');  
+      } catch (e) {    
         return res.send({ flag_success: 'failed',error_msg: `${req.body.batch_list_data[i].id}'s config is a invalid json! Check and try it again!`});
       }
       jsonDate['image'] = i + jsonDate['image'].slice(-4);

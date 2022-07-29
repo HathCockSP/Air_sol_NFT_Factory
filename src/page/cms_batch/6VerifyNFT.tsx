@@ -31,6 +31,7 @@ const VerifyNFT = ({ id, setFlagStep, set_flag_step_verifyNFT }: any) => {
                 setFlagProcessBtn(false);
                 set_flag_step_verifyNFT(2);
                 setFlagStep(6);
+                clearInterval(timer);
               }, 1000);
               return 100;
             }

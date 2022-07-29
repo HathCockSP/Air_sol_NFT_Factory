@@ -5,7 +5,7 @@ const ErrorLogSchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
-  event_type: {
+  event_step: {
     type: String,
     require: true,
     maxLength: 100,
