@@ -15,8 +15,8 @@ import * as anchor from '@project-serum/anchor';
 
 const Header = () => {
   const [flag_mint_dropmenu, set_flag_mint_dropmenu] = useState<any>(false);
-  const wallet = useWallet();
-  const [balance, setBalance] = useState<number>();
+  const wallet:any = useWallet();
+  const [balance, setBalance] = useState<any>();
 
   const [username, setUsername] = useState<any>();
 
@@ -55,7 +55,7 @@ const Header = () => {
   useEffect(()=>{
     const user1:any = localStorage.getItem('jwtToken');
     setUsername((jwtDecode(user1) as any).username);
-  })
+  }, [])
   return (
     <StyledComponent>
       <LeftPart01>
@@ -166,7 +166,7 @@ const Header = () => {
               </Box>
             </ConnectButton>
           ) : (
-            <ConnectButton>{wallet.connected && (shortenAddress(wallet.publicKey + " "))}</ConnectButton>
+            <ConnectButton>{shortenAddress(wallet.publicKey)} || {balance.toLocaleString()}SOL</ConnectButton>
           )}
           <SignOutBtn
             onClick={() => {
@@ -209,7 +209,7 @@ const StyledComponent = styled.div`
 `;
 
 const ConnectButton = styled(WalletDialogButton)`
-  width: 170px;
+  width: 200px;
   height: 50px;
   margin-top: 10px;
   margin-bottom: 5px;
