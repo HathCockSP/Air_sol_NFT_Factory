@@ -5,10 +5,6 @@
   /* background-color: #54c3e7 !important; */
   pointer-events: auto !important;
   opacity: 1 !important;
-  &:hover {
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
 }
 
 .extraClass1 {
@@ -18,8 +14,10 @@
   /* background-color: #54c3e7 !important; */
   pointer-events: auto !important;
   opacity: 1 !important;
-  &:hover {
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
+
+}
+
+.errorMsg{
+  font-size: 20px !important;
+  text-transform: none !important;
 }

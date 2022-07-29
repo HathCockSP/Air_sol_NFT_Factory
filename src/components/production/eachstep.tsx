@@ -1,33 +1,31 @@
-import { Box } from '@material-ui/core';
-import styled from 'styled-components';
-import { Oval } from 'react-loader-spinner';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import ReactTooltip from 'react-tooltip';
-import { BsCheckCircle } from 'react-icons/bs';
-import { BiErrorCircle } from 'react-icons/bi';
-
+import { Box } from "@material-ui/core";
+import styled from "styled-components";
+import { Oval } from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import ReactTooltip from "react-tooltip";
+import { BsCheckCircle } from "react-icons/bs";
+import { BiErrorCircle } from "react-icons/bi";
 
 type HeaderStyledProps = {
   nextstep: boolean;
-}
-const EachStep = ({ str, flag_step, nextstep }: any) => {
-
+};
+const EachStep = ({ str, flag_step, nextstep, errorMsg }: any) => {
   return (
-    <StyledComponent nextstep={nextstep} >
+    <StyledComponent nextstep={nextstep}>
       {str}
       {flag_step === 0 ? (
         <></>
       ) : flag_step === 1 ? (
         <>
           <Box
-            display={'flex'}
+            display={"flex"}
             alignItems="center"
-            justifyContent={'center'}
-            position={'absolute'}
-            right={'20px'}
+            justifyContent={"center"}
+            position={"absolute"}
+            right={"20px"}
             data-tip
             data-for="processing"
-            style={{cursor:'pointer'}}
+            style={{ cursor: "pointer" }}
           >
             <Oval
               ariaLabel="loading-indicator"
@@ -38,50 +36,75 @@ const EachStep = ({ str, flag_step, nextstep }: any) => {
               secondaryColor="#54c3e7"
             />
           </Box>
-          <ReactTooltip id="processing" type="warning" effect="solid" place="right">
+          <ReactTooltip
+            id="processing"
+            type="warning"
+            effect="solid"
+            place="right"
+          >
             <span>processing</span>
           </ReactTooltip>
         </>
       ) : flag_step === 2 ? (
         <>
           <Box
-            display={'flex'}
+            display={"flex"}
             alignItems="center"
-            justifyContent={'center'}
-            position={'absolute'}
-            right={'20px'}
-            color={'#22ac47'}
-            fontSize={'25px'}
-            fontWeight={'700'}
+            justifyContent={"center"}
+            position={"absolute"}
+            right={"20px"}
+            color={"#22ac47"}
+            fontSize={"25px"}
+            fontWeight={"700"}
             data-tip
             data-for="success"
-            style={{cursor:'pointer'}}
+            style={{ cursor: "pointer" }}
           >
             <BsCheckCircle />
           </Box>
-          <ReactTooltip id="success" type="success" effect="solid" place="right">
-            <span>success</span>
+          <ReactTooltip
+            id="success"
+            type="success"
+            effect="solid"
+            place="right"
+            className="errorMsg"
+          >
+            <Box display={"flex"}>
+              <Box display={"flex"}>
+                Success!
+              </Box>
+            </Box>
           </ReactTooltip>
         </>
       ) : (
         <>
-        <Box
-          display={'flex'}
-          alignItems="center"
-          justifyContent={'center'}
-          position={'absolute'}
-          right={'20px'}
-          color={'#c32828'}
-          fontSize={'30px'}
-          fontWeight={'700'}
-          data-tip
-          data-for="failed"
-          style={{cursor:'pointer'}}
-        >
-          <BiErrorCircle />
-        </Box>
-        <ReactTooltip id="failed" type="error" effect="solid" place="right">
-            <span>failed</span>
+          <Box
+            display={"flex"}
+            alignItems="center"
+            justifyContent={"center"}
+            position={"absolute"}
+            right={"20px"}
+            color={"#c32828"}
+            fontSize={"30px"}
+            fontWeight={"700"}
+            data-tip
+            data-for="failed"
+            style={{ cursor: "pointer" }}
+          >
+            <BiErrorCircle />
+          </Box>
+          <ReactTooltip
+            id="failed"
+            type="error"
+            effect="solid"
+            place="right"
+            className="errorMsg"
+          >
+            <Box display={"flex"}>
+              <Box display={"flex"}>
+                {errorMsg}
+              </Box>
+            </Box>
           </ReactTooltip>
         </>
       )}
@@ -100,9 +123,8 @@ const StyledComponent = styled(Box)<HeaderStyledProps>`
   color: #176180;
   font-size: 1.2rem;
   font-weight: bold;
-  transition: .5s;
-  background-color:  ${({ nextstep }) => nextstep?'white': '#a1a1a1'};
-
+  transition: 0.5s;
+  background-color: ${({ nextstep }) => (nextstep ? "white" : "#a1a1a1")};
 `;
 
 export default EachStep;

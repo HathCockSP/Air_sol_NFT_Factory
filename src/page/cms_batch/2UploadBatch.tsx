@@ -306,6 +306,7 @@ const UploadBatch = ({
   set_flag_step_upload,
   set_sSelectedIDs,
   setFlagStep,
+  setErrorMsg
 }: any) => {
   const [flag_downlocalbtn, set_flag_downlocalbtn] = useState<any>(false);
 
@@ -335,11 +336,12 @@ const UploadBatch = ({
       _.includes(selected, each.id),
     );
     uploadLocal(id ,sBatchName, selected_batch).then(res => {
-      if (res === 'success') {
+      if (res.flag_success === 'success') {
         set_flag_step_upload(2);
         set_flag_downlocalbtn(false);
         setFlagStep(2);
-      } else if (res === 'error') {
+      } else if (res.flag_success === 'failed') {
+        setErrorMsg(res.error_msg);
         set_flag_step_upload(3);
         set_flag_downlocalbtn(false);
         setFlagStep(1);

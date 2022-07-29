@@ -226,12 +226,25 @@ router.post('/download_batch', async (req, res) => {
     // }
   }
 
+
+  const tempProductoin = await productionModel.find();
+  let production_id;
+  if(tempProductoin.length === 0)
+  {
+    production_id = 0;
+  }
+  else{
+    production_id = tempProductoin[tempProductoin.length-1].production_id + 1;
+  }
+
+
   const newProduction = new productionModel({
     username: req.body.username,
     wallet_address: '',
     production_name: req.body.production_name,
     batch_name: req.body.batch_name,
-    created_date: new Date().toLocaleString()
+    created_date: new Date().toLocaleString(),
+    production_id: production_id
   });
   newProduction.save(function (err, added) {
     if (err) 
@@ -241,7 +254,7 @@ router.post('/download_batch', async (req, res) => {
       console.log(err);
     }
     else{
-      res.send({ flag_success: 'success', id: added._id });
+      res.send({ flag_success: 'success', id: added.production_id });
       console.log('******** saved in mongo database successfully *********');
     }
   });
@@ -280,7 +293,13 @@ router.post('/uploadLocal', async (req, res) => {
         `./config_metadata/batch_data/${req.body.sBatchName}/${req.body.batch_list_data[i].id}/config.json`,
         'utf8',
       );
-      let jsonDate = JSON.parse(readFile);
+      let jsonDate;
+      try {  
+        jsonDate = JSON.parse(readFile);
+      } catch (e) {  
+        console.log('invalid json');  
+        return res.send({ flag_success: 'failed',error_msg: `${req.body.batch_list_data[i].id}'s config is a invalid json! Check and try it again!`});
+      }
       jsonDate['image'] = i + jsonDate['image'].slice(-4);
 
       for (
@@ -324,10 +343,10 @@ router.post('/uploadLocal', async (req, res) => {
   // const updateProduction = new productionModel({
   //   selected_ids: req.body.batch_list_data,
   // });
-  productionModel.findOneAndUpdate({_id:req.body.id}, {selected_ids: req.body.batch_list_data},function (err, added) {
+  productionModel.findOneAndUpdate({production_id:req.body.id}, {selected_ids: req.body.batch_list_data},function (err, added) {
     if (err) console.log(err);
     else{
-      res.send({ flag_success: 'success', id: added._id });
+      res.send({ flag_success: 'success', id: added.production_id });
       console.log('******** updated in mongo database successfully *********');
     }
   });

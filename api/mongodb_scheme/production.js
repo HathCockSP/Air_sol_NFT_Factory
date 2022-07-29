@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 
-let counter = 0;
 const ProductionSchema = new mongoose.Schema({
   production_id: {
     type: Number,
     require: true,
-    default: () => counter++,
   },
   username: {
     type: String,
