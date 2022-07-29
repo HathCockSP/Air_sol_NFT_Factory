@@ -32,6 +32,7 @@ const UploadNFT = ({ setFlagStep, set_flag_step_uploadNFT, id }: any) => {
                 setFlagProcessBtn(false);
                 set_flag_step_uploadNFT(2);
                 setFlagStep(5);
+                clearInterval(timer);
               }, 1000);
               return 100;
             }

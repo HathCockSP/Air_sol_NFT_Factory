@@ -14,7 +14,7 @@ import {
 } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
-const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare}:any) => {
+const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare, setMintCount}:any) => {
 
   const [config, set_config] = useState<any>({
     price: null,
@@ -27,7 +27,7 @@ const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare}:an
     endSettings: null,
     whitelistMintSettings: null,
     hiddenSettings: null,
-    storage: 'arweave',
+    storage: 'arweave-sol',
     ipfsInfuraProjectId: null,
     ipfsInfuraSecret: null,
     nftStorageKey: null,
@@ -58,13 +58,12 @@ const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare}:an
     }
 
     if (config.number !== sSelectedIDs) {
-      NotificationManager.warning("This number isn't matched with selectd IDS, Are you Okay?", 'Warning!', 3000);
+      NotificationManager.warning("This number isn't matched with selected IDS, Are you Okay?", 'Warning!', 3000);
     }
+    setMintCount(config.number);
     set_flag_step_prepare(2);
     generate_config(id,config);
     setFlagStep(4);
-    // navigate('/generate_metadata');
-    // window.scrollTo(0, 0);
   };
 
   const importConfig = (import_configFile: any) => {

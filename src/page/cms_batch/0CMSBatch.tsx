@@ -111,7 +111,7 @@ const CMSBatch = () => {
                     mintCount={mintCount}
                   />
                 ) : (
-                  <></>
+                  <>123</>
                 )}
                 {/* <SelectBatch set_flag_step_batch={set_flag_step_batch} /> */}
               </Box>

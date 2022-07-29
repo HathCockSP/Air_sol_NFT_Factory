@@ -11,7 +11,7 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { mint_nft } from '../../redux/actions/production';
 
-const MintNFT = ({ id,setFlagStep, set_flag_step_mintNFT, mintCount }: any) => {
+const MintNFT = ({ id, set_flag_step_mintNFT, mintCount }: any) => {
   const [progress, setProgress] = useState<any>(0);
   const [flagProcessBtn, setFlagProcessBtn] = useState<any>(false);
 
@@ -22,8 +22,7 @@ const MintNFT = ({ id,setFlagStep, set_flag_step_mintNFT, mintCount }: any) => {
       return;
     }
     set_flag_step_mintNFT(1);
-    alert(mintCount)
-    mint_nft(id,mintCount).then(res => {
+    mint_nft(id,mintCount).then((res) => {
       if (res.success) {
         const timer = setInterval(() => {
           setProgress((oldProgress: any) => {
@@ -31,7 +30,9 @@ const MintNFT = ({ id,setFlagStep, set_flag_step_mintNFT, mintCount }: any) => {
               setTimeout(() => {
                 set_flag_step_mintNFT(2);
                 setFlagProcessBtn(false);
-                        // setFlagStep(7);
+                clearInterval(timer);
+                NotificationManager.success('Please check your wallet.', 'Success!', 3000);
+                return;
               }, 1000);
               return 100;
             }

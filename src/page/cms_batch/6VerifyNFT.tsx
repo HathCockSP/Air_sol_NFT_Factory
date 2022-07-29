@@ -22,15 +22,15 @@ const VerifyNFT = ({ id, setFlagStep, set_flag_step_verifyNFT }: any) => {
       return;
     }
     set_flag_step_verifyNFT(1);
-    verify_nft(id).then(res => {
+    verify_nft(id).then((res) => {
       if (res.success) {
         const timer = setInterval(() => {
           setProgress((oldProgress: any) => {
             if (oldProgress === 100) {
               setTimeout(() => {
+                setFlagProcessBtn(false);
                 set_flag_step_verifyNFT(2);
                 setFlagStep(6);
-                setFlagProcessBtn(false);
               }, 1000);
               return 100;
             }
@@ -42,8 +42,8 @@ const VerifyNFT = ({ id, setFlagStep, set_flag_step_verifyNFT }: any) => {
           clearInterval(timer);
         };
       } else {
+        setFlagProcessBtn(false);        
         set_flag_step_verifyNFT(3);
-        setFlagProcessBtn(false);
         return;
       }
     });
