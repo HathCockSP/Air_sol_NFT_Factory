@@ -56,7 +56,7 @@ const SignIn = () => {
       if (res.success === 'success')
       {
         localStorage.setItem('jwtToken', res.jwtToken);
-        navigate('/');
+        navigate('/cms_batch');
         window.location.reload();
       }
     })

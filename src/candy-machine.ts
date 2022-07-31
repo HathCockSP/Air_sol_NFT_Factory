@@ -589,7 +589,7 @@ export const mintOneToken = async (
 };
 
 export const shortenAddress = (address: string, chars = 4): string => {
-  return address&&`${address.slice(0, chars)}...${address.slice(-chars)}`;
+  return `${address.slice(0, chars)}...${address.slice(-chars)}`;
 };
 
 const sleep = (ms: number): Promise<void> => {
