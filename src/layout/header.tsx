@@ -9,11 +9,11 @@ import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { MdAccountBalanceWallet } from 'react-icons/md';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import jwtDecode from 'jwt-decode'
-import { shortenAddress} from '../candy-machine'
+import { shortenAddress } from '../candy-machine';
 
 import * as anchor from '@project-serum/anchor';
 
-const Header = () => {
+const Header = ({connection,rpcHost,network}:any) => {
   const [flag_mint_dropmenu, set_flag_mint_dropmenu] = useState<any>(false);
   const wallet:any = useWallet();
   const [balance, setBalance] = useState<any>();
@@ -21,10 +21,10 @@ const Header = () => {
   const [username, setUsername] = useState<any>();
 
   let navigate = useNavigate();
-  const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
-  const connection = new anchor.web3.Connection(
-    rpcHost ? rpcHost : anchor.web3.clusterApiUrl('devnet'),
-  );
+  // const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
+  // const connection = new anchor.web3.Connection(
+  //   rpcHost ? rpcHost : anchor.web3.clusterApiUrl('devnet'),
+  // );
 
   const anchorWallet = useMemo(() => {
     if (
@@ -37,6 +37,7 @@ const Header = () => {
     }
 
     return {
+
       publicKey: wallet.publicKey,
       signAllTransactions: wallet.signAllTransactions,
       signTransaction: wallet.signTransaction,
@@ -55,7 +56,7 @@ const Header = () => {
   useEffect(()=>{
     const user1:any = localStorage.getItem('jwtToken');
     setUsername((jwtDecode(user1) as any).username);
-  }, [])
+  }, [wallet])
   return (
     <StyledComponent>
       <LeftPart01>
@@ -166,7 +167,7 @@ const Header = () => {
               </Box>
             </ConnectButton>
           ) : (
-            <ConnectButton>{shortenAddress(wallet.publicKey)} || {balance.toLocaleString()}SOL</ConnectButton>
+            <ConnectButton>{shortenAddress(wallet.publicKey?.toBase58())}</ConnectButton>
           )}
           <SignOutBtn
             onClick={() => {

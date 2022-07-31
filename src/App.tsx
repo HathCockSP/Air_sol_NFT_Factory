@@ -41,20 +41,20 @@ const theme = createTheme({
   },
 });
 
-const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
-  try {
-    const candyMachineId = new anchor.web3.PublicKey(
-      process.env.REACT_APP_CANDY_MACHINE_ID!,
-    );
+// const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
+//   try {
+//     const candyMachineId = new anchor.web3.PublicKey(
+//       process.env.REACT_APP_CANDY_MACHINE_ID!,
+//     );
 
-    return candyMachineId;
-  } catch (e) {
-    console.log('Failed to construct CandyMachineId', e);
-    return undefined;
-  }
-};
+//     return candyMachineId;
+//   } catch (e) {
+//     console.log('Failed to construct CandyMachineId', e);
+//     return undefined;
+//   }
+// };
 
-const candyMachineId = getCandyMachineId();
+// const candyMachineId = getCandyMachineId();
 const network = process.env.REACT_APP_SOLANA_NETWORK as WalletAdapterNetwork;
 const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
 const connection = new anchor.web3.Connection(
@@ -82,7 +82,11 @@ const App = () => {
           <WalletDialogProvider>
             <StyledComponent>
               <BrowserRouter>
-                {localStorage.getItem('jwtToken') ? <Header /> : <></>}
+                {localStorage.getItem('jwtToken') ? <Header 
+                                        connection={connection}
+                                        rpcHost={rpcHost}
+                                        network={network}
+                /> : <></>}
                 {/* <Header />  */}
                 <Routes>
                   {/* <Route  path="/" element={localStorage.getItem('jwtToken')?<Home/>:<SignIn/>} />
