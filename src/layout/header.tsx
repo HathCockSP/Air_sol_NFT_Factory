@@ -166,8 +166,7 @@ const Header = () => {
               </Box>
             </ConnectButton>
           ) : (
-            // <ConnectButton>{shortenAddress(wallet.publicKey)} || {balance.toLocaleString()}SOL</ConnectButton>
-            <ConnectButton>{shortenAddress(wallet.publicKey)}</ConnectButton>
+            <ConnectButton>{shortenAddress(wallet.publicKey)} || {balance.toLocaleString()}SOL</ConnectButton>
           )}
           <SignOutBtn
             onClick={() => {
