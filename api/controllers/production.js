@@ -9,32 +9,44 @@ const productionModel = require("../mongodb_scheme/production");
 const errorModel = require("../mongodb_scheme/error_log");
 
 router.get("/get_batch_list", async (req, res) => {
-  https
-    .get(
-      "https://air-client-portal-dev.make-project.fun/filters",
-      function (res1) {
-        let data = "",
-          json_data;
-        res1.on("data", function (stream) {
-          data += stream;
-        });
-        res1.on("end", function () {
-          try {
-            json_data = JSON.parse(data);
-          } catch (error) {
-            console.log(error);
-            return res.send({
-              flag_success: "failed",
-              error_msg: `Can't get batch list from cms!`,
-            });
-          }
-          res.send({ batch_list: json_data.batch });
-        });
-      }
-    )
-    .on("error", function (e) {
-      console.log(e.message);
-    });
+  Axios({
+    url: "https://air-client-portal-dev.make-project.fun/filters",
+    method: "GET",
+    responseType: "stream",
+  }).then((response) => {
+    console.log(response)
+    // response.data.pipe(
+    //   fs.createWriteStream(
+    //     `./config_metadata/batch_data/${req.body.batch_name}/${temp}/config.json`
+    //   )
+    // );
+  });
+  // https
+  //   .get(
+  //     "https://air-client-portal-dev.make-project.fun/filters",
+  //     function (res1) {
+  //       let data = "",
+  //         json_data;
+  //       res1.on("data", function (stream) {
+  //         data += stream;
+  //       });
+  //       res1.on("end", function () {
+  //         try {
+  //           json_data = JSON.parse(data);
+  //         } catch (error) {
+  //           console.log(error);
+  //           return res.send({
+  //             flag_success: "failed",
+  //             error_msg: `Can't get batch list from cms!`,
+  //           });
+  //         }
+  //         res.send({ batch_list: json_data.batch });
+  //       });
+  //     }
+  //   )
+  //   .on("error", function (e) {
+  //     console.log(e.message);
+  //   });
 });
 
 router.post("/get_batch_data", async (req, res) => {
