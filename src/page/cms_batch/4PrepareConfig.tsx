@@ -13,8 +13,10 @@ import {
   NotificationManager,
 } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { useWallet } from '@solana/wallet-adapter-react';
 
-const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare, setMintCount}:any) => {
+const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare, setMintCount, setErrorMsg}:any) => {
+  const wallet = useWallet();
 
   const [config, set_config] = useState<any>({
     price: null,
@@ -61,9 +63,20 @@ const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare, se
       NotificationManager.warning("This number isn't matched with selected IDS, Are you Okay?", 'Warning!', 3000);
     }
     setMintCount(config.number);
-    set_flag_step_prepare(2);
-    generate_config(id,config);
-    setFlagStep(4);
+
+    generate_config(id,config).then(res=>{
+      if (res.flag_success === 'success') {
+        set_flag_step_prepare(2);
+        setFlagStep(4);
+      }
+      else if(res.flag_success === 'failed')
+      {
+        set_flag_step_prepare(3);
+        setErrorMsg(res.error_msg);
+        setFlagStep(3);
+      }
+    });
+
   };
 
   const importConfig = (import_configFile: any) => {
@@ -188,6 +201,7 @@ const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare, se
                 {...{ type: 'text' }}
                 {...{
                   value:
+                  wallet.connected? wallet.publicKey?.toBase58():
                     config.solTreasuryAccount === null
                       ? ''
                       : config.solTreasuryAccount,
