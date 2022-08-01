@@ -39,7 +39,7 @@ const MintNFT = ({ id, set_flag_step_mintNFT, mintCount, setErrorMsg }: any) => 
               setTimeout(() => {
                 navigate('/');
                 return;
-              }, 1000);
+              }, 2000);
               return 100;
             }
             const diff = Math.round(Math.random() * 10);
