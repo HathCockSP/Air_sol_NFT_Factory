@@ -36,7 +36,10 @@ const MintNFT = ({ id, set_flag_step_mintNFT, mintCount, setErrorMsg }: any) => 
                 NotificationManager.success('Please check your wallet.', 'Success!', 3000);
                 return;
               }, 1000);
-              navigate('/');
+              setTimeout(() => {
+                navigate('/');
+                return;
+              }, 1000);
               return 100;
             }
             const diff = Math.round(Math.random() * 10);
