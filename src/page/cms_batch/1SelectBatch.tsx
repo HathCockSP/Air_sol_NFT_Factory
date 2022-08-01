@@ -234,7 +234,7 @@ const SelectBatch = ({
     get_batch_data(batch_num).then(data => {
       set_batch_data(data);
     });
-  });
+  },[]);
 
   return (
     <StyledComponent>

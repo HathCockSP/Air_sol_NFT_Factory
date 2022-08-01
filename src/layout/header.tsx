@@ -48,7 +48,7 @@ const Header = ({connection,rpcHost,network}:any) => {
     (async () => {
       if (anchorWallet) {
         const balance = await connection.getBalance(anchorWallet!.publicKey);
-        setBalance(balance / LAMPORTS_PER_SOL);
+        setBalance(balance / LAMPORTS_PER_SOL); 
       }
     })();
   }, [anchorWallet, connection]);
