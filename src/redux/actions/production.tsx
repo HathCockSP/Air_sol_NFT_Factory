@@ -28,7 +28,6 @@ export function uploadLocal(id:any,sBatchName: any, batch_list_data: any) {
   return axios
     .post('/api/production/uploadLocal', { id, sBatchName, batch_list_data })
     .then(res => {
-      console.log(res.data)
       return res.data;
     });
 }

@@ -41,8 +41,11 @@ const EachStep = ({ str, flag_step, nextstep, errorMsg }: any) => {
             type="warning"
             effect="solid"
             place="right"
+            className="errorMsg"
           >
-            <span>processing</span>
+            <Box display={"flex"}>
+              <Box display={"flex"}>Processing...</Box>
+            </Box>
           </ReactTooltip>
         </>
       ) : flag_step === 2 ? (
@@ -70,9 +73,7 @@ const EachStep = ({ str, flag_step, nextstep, errorMsg }: any) => {
             className="errorMsg"
           >
             <Box display={"flex"}>
-              <Box display={"flex"}>
-                Success!
-              </Box>
+              <Box display={"flex"}>Success!</Box>
             </Box>
           </ReactTooltip>
         </>
@@ -101,9 +102,7 @@ const EachStep = ({ str, flag_step, nextstep, errorMsg }: any) => {
             className="errorMsg"
           >
             <Box display={"flex"}>
-              <Box display={"flex"}>
-                {errorMsg}
-              </Box>
+              <Box display={"flex"}>{errorMsg}</Box>
             </Box>
           </ReactTooltip>
         </>
