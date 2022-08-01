@@ -10,8 +10,10 @@ import 'react-notifications/lib/notifications.css';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { mint_nft } from '../../redux/actions/production';
+import { useNavigate } from 'react-router-dom';
 
 const MintNFT = ({ id, set_flag_step_mintNFT, mintCount, setErrorMsg }: any) => {
+  const navigate = useNavigate();
   const [progress, setProgress] = useState<any>(0);
   const [flagProcessBtn, setFlagProcessBtn] = useState<any>(false);
 
@@ -34,6 +36,7 @@ const MintNFT = ({ id, set_flag_step_mintNFT, mintCount, setErrorMsg }: any) => 
                 NotificationManager.success('Please check your wallet.', 'Success!', 3000);
                 return;
               }, 1000);
+              navigate('/');
               return 100;
             }
             const diff = Math.round(Math.random() * 10);
