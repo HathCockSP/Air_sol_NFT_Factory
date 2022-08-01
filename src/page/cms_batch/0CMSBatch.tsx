@@ -67,6 +67,7 @@ const CMSBatch = () => {
                     set_sBatchName={set_sBatchName}
                     set_sBatchData={set_sBatchData}
                     setId={setId}
+                    setErrorMsg={setErrorMsg}
                   />
                 ) : flagStep === 1 ? (
                   <UploadBatch
@@ -84,6 +85,7 @@ const CMSBatch = () => {
                     sBatchData={sBatchData}
                     set_flag_step_review={set_flag_step_review}
                     id={id}
+                    setErrorMsg={setErrorMsg}
                   />
                 ) : flagStep === 3 ? (
                   <PrepareConfig
@@ -92,18 +94,21 @@ const CMSBatch = () => {
                     set_flag_step_prepare={set_flag_step_prepare}
                     id={id}
                     setMintCount={setMintCount}
+                    setErrorMsg={setErrorMsg}
                   />
                 ) : flagStep === 4 ? (
                   <UploadNFT
                     setFlagStep={setFlagStep}
                     set_flag_step_uploadNFT={set_flag_step_uploadNFT}
                     id={id}
+                    setErrorMsg={setErrorMsg}
                   />
                 ) : flagStep === 5 ? (
                   <VerifyNFT
                     setFlagStep={setFlagStep}
                     set_flag_step_verifyNFT={set_flag_step_verifyNFT}
                     id={id}
+                    setErrorMsg={setErrorMsg}
                   />
                 ) : flagStep === 6 ? (
                   <MintNFT
@@ -111,6 +116,7 @@ const CMSBatch = () => {
                     set_flag_step_mintNFT={set_flag_step_mintNFT}
                     id={id}
                     mintCount={mintCount}
+                    setErrorMsg={setErrorMsg}
                   />
                 ) : (
                   <>123</>

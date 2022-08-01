@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export function get_batch_list() {
   return axios.get('/api/production/get_batch_list').then(res => {
-    return res.data.batch_list;
+    return res.data;
     // console.log(res.data.batch_list);
   });
 }
@@ -11,7 +11,7 @@ export function get_batch_data(batch_num: any) {
   return axios
     .post('/api/production/get_batch_data', { batch_num })
     .then(res => {
-      return res.data.batch_data;
+      return res.data;
       // console.log(res.data.batch_list);
     });
 }
@@ -34,17 +34,14 @@ export function uploadLocal(id:any,sBatchName: any, batch_list_data: any) {
 }
 
 export function generate_config(id:any, data: any) {
-  axios.post('/api/production/generate_config', {id,data}).then(res => {
-    if (res.data.success) alert('success');
-    else alert('error occur');
+  return axios.post('/api/production/generate_config', {id,data}).then(res => {
+    return res.data;
   });
 }
 
 export function getAssets(id:any) {
   return axios.post('/api/production/get_assets',{id}).then(res => {
-    if (res.data.success) {
-      return res.data;
-    } else alert('error occur');
+    return res.data;
   });
 }
 

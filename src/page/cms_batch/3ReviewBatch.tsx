@@ -6,20 +6,32 @@ import { useEffect, useState } from 'react';
 import { getAssets } from '../../redux/actions/production';
 import PropertyText from '../../components/production/PropertyText';
 import PropertyObjectText from '../../components/production/PropertyObjectText';
+import {
+  NotificationContainer,
+  NotificationManager,
+} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const ReviewBatch = ({
   id,
   setFlagStep,
   sBatchData,
   set_flag_step_review,
+  setErrorMsg
 }: any) => {
   // const inputRef = useRef<any>(null);
   const [select_num, set_select_num] = useState<any>(1);
   const [total_num, set_total_num] = useState<any>(0);
   const [files, set_files] = useState<any>([]);
   const [flag_full, set_flag_full] = useState<any>(false);
+  const [flagNext, setFlagNext] = useState<any>(false);
 
   const next_step = () => {
+    if(!flagNext)
+    {
+      NotificationManager.error(`Can't display any NFTs.`, 'Hi.', 3000);
+      return;
+    }
     set_flag_step_review(2);
     setFlagStep(3);
   };
@@ -27,10 +39,17 @@ const ReviewBatch = ({
   useEffect(() => {
     if(id!==null)
     {
-      getAssets(id).then(data => {
-        if (data.success) {
-          set_files(data.files);
-          set_total_num(data.count);
+      getAssets(id).then(res => {
+        if (res.flag_success === 'success') {
+          set_files(res.files);
+          set_total_num(res.count);
+          setFlagNext(true);
+        }
+        else if(res.flag_success === 'failed')
+        {
+          set_flag_step_review(3);
+          setErrorMsg(res.error_msg);
+          setFlagStep(2);
         }
       });
     }
@@ -258,8 +277,10 @@ const ReviewBatch = ({
         </PropertyPart01>
       </Workflow>
       <GeneratePart>
+        
         <GenerateButton onClick={() => next_step()}>Next Step</GenerateButton>
       </GeneratePart>
+      <NotificationContainer/>
     </StyledComponent>
   );
 };

@@ -141,7 +141,8 @@ const SelectBatch = ({
   set_sBatchName,
   set_sBatchData,
   setFlagStep,
-  setId
+  setId,
+  setErrorMsg
 }: any) => {
   const [batch_list, set_batch_list] = useState<any>();
   const [batch_num, set_batch_num] = useState<any>(0);
@@ -160,8 +161,12 @@ const SelectBatch = ({
       NotificationManager.error('Please input production name!', 'Hi.', 3000);
       return;
     }
-    if (batch_list.length === 0) {
-      NotificationManager.error("Can't get any batch in cms!", 'Hi.', 3000);
+    if (batch_list === undefined||batch_list.length === 0) {
+      NotificationManager.error("Can't get any batch list in cms!", 'Hi.', 3000);
+      return;
+    }
+    if (batch_data === undefined) {
+      NotificationManager.error("Can't get any batch data in cms!", 'Hi.', 3000);
       return;
     }
     set_flag_downbtn(true);
@@ -187,9 +192,10 @@ const SelectBatch = ({
         set_flag_downbtn(false);
         setFlagStep(1);
         setId(res.id);
-      } else if (res === 'error') {
+      } else if (res.flag_success === 'failed') {
         set_flag_step_batch(3);
         set_flag_downbtn(false);
+        setErrorMsg(res.error_msg);
         setFlagStep(0);
       }
     });
@@ -223,18 +229,34 @@ const SelectBatch = ({
 
   // table - end
   useEffect(() => {
-    get_batch_list().then(data => {
-      let batch_list = [];
-      for (var i = 1; i < Object.keys(data).length; i++) {
-        batch_list.push(data[i]);
+    get_batch_list().then(res => {
+      if (res.flag_success === 'success') {
+        let batch_list = [];
+        for (var i = 1; i < Object.keys(res.batch_list).length; i++) {
+          batch_list.push(res.batch_list[i]);
+        }
+        set_batch_list(batch_list);
+        set_sBatchName(batch_list[batch_num]);
       }
-      set_batch_list(batch_list);
-      set_sBatchName(batch_list[batch_num]);
+      else if (res.flag_success === 'failed') {
+        set_flag_step_batch(3);
+        set_flag_downbtn(false);
+        setErrorMsg(res.error_msg);
+        setFlagStep(0);
+      }
     });
-    get_batch_data(batch_num).then(data => {
-      set_batch_data(data);
+    get_batch_data(batch_num).then(res => {
+      if (res.flag_success === 'success') {
+        set_batch_data(res.batch_data);
+      }
+      else if (res.flag_success === 'failed') {
+        set_flag_step_batch(3);
+        set_flag_downbtn(false);
+        setErrorMsg(res.error_msg);
+        setFlagStep(0);
+      }
     });
-  });
+  },[]);
 
   return (
     <StyledComponent>

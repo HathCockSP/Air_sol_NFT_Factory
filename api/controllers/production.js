@@ -321,11 +321,7 @@ router.post("/uploadLocal", async (req, res) => {
           description: `${req.body.batch_list_data[i].id}'s config is a invalid json!`,
           event_date: new Date(),
         });
-        try {
-          await newError.save();
-        } catch (error) {
-          return console.log(error);
-        }
+        await newError.save();
         return res.send({
           flag_success: "failed",
           error_msg: `${req.body.batch_list_data[i].id}'s config is a invalid json! Check and try it again!`,
@@ -388,7 +384,6 @@ router.post("/uploadLocal", async (req, res) => {
     }
   );
   console.log("******** upload on local successfully *********");
-  // res.send({ flag_success: 'success' });
 });
 
 router.post("/generate_config", async (req, res) => {
@@ -396,8 +391,20 @@ router.post("/generate_config", async (req, res) => {
   fs.writeFile(
     `./config_metadata/uploaded_batch_data/${req.body.id}/config.json`,
     JSON.stringify(req.body.data, null, 2),
-    function (err) {
-      if (err) throw err;
+    async function (error) {
+      if (error) {
+        const newError = new errorModel({
+          production_id: req.body.id,
+          event_step: "generate_config",
+          description: `${error}`,
+          event_date: new Date(),
+        });
+        await newError.save();
+        return res.send({
+          flag_success: "failed",
+          error_msg: `Can't save generated config file, please check it again.`,
+        });
+      }
       console.log("config.json is created successfully.");
     }
   );
@@ -430,7 +437,7 @@ function fromDir(startPath, filter) {
   return array;
 }
 
-router.post("/get_assets", (req, res) => {
+router.post("/get_assets", async(req, res) => {
   let dir = `./config_metadata/uploaded_batch_data/${req.body.id}/assets/`;
   // let files_img = fromDir(dir, '.jpg');
   let files_json = fromDir(dir, ".json");
@@ -438,7 +445,23 @@ router.post("/get_assets", (req, res) => {
 
   for (var i = 0; i < files_json.length; i++) {
     let temp = fs.readFileSync("./" + files_json[i], "utf8");
-    files.push(JSON.parse(temp));
+    let jsonDate;
+      try {
+        jsonDate = JSON.parse(temp);
+      } catch (e) {
+        const newError = new errorModel({
+          production_id: req.body.id,
+          event_step: "review_batch",
+          description: `${files_json[i]} is invalid! Check it agagin!`,
+          event_date: new Date(),
+        });
+        await newError.save();
+        return res.send({
+          flag_success: "failed",
+          error_msg: `${files_json[i]}.json is invalid! Check it agagin!`,
+        });
+      }
+    files.push(jsonDate);
   }
   return res.json({ success: true, files: files, count: files_json.length });
 });
