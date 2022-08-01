@@ -13,6 +13,7 @@ import {
   NotificationManager,
 } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 // table - start
 import {
@@ -147,14 +148,20 @@ const SelectBatch = ({
   const [batch_data, set_batch_data] = useState<any>();
   const [production_name, set_production_name] = useState<any>('');
   const [flag_downbtn, set_flag_downbtn] = useState<any>(false);
+  const wallet = useWallet();
 
   const download = () => {
+    if (!wallet.connected)
+    {
+      NotificationManager.error('Please connect wallet!', 'Hi.', 3000);
+      return;
+    }
     if (production_name === '') {
-      NotificationManager.error('Please input production name.', 'Hi.', 3000);
+      NotificationManager.error('Please input production name!', 'Hi.', 3000);
       return;
     }
     if (batch_list.length === 0) {
-      NotificationManager.error("Can't get any batch in cms.", 'Hi.', 3000);
+      NotificationManager.error("Can't get any batch in cms!", 'Hi.', 3000);
       return;
     }
     set_flag_downbtn(true);
