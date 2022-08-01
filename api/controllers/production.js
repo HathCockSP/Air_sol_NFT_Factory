@@ -28,7 +28,7 @@ router.get("/get_batch_list", async (req, res) => {
               error_msg: `Can't get batch list from cms!`,
             });
           }
-          res.send({ flag_success:'success',batch_list: json_data.batch });
+          res.send({ batch_list: json_data.batch });
         });
       }
     )
@@ -60,7 +60,7 @@ router.post("/get_batch_data", async (req, res) => {
             });
           }
 
-          res.send({ flag_success:'success',batch_data: json_data });
+          res.send({ batch_data: json_data });
         });
       }
     )
@@ -395,7 +395,7 @@ router.post("/generate_config", async (req, res) => {
       if (error) {
         const newError = new errorModel({
           production_id: req.body.id,
-          event_step: "generate_config",
+          event_step: "prepare_config",
           description: `${error}`,
           event_date: new Date(),
         });
@@ -408,6 +408,9 @@ router.post("/generate_config", async (req, res) => {
       console.log("config.json is created successfully.");
     }
   );
+  return res.send({
+    flag_success: "success"
+  });
 });
 
 function fromDir(startPath, filter) {
@@ -463,7 +466,7 @@ router.post("/get_assets", async(req, res) => {
       }
     files.push(jsonDate);
   }
-  return res.json({ success: true, files: files, count: files_json.length });
+  return res.json({ flag_success: 'success', files: files, count: files_json.length });
 });
 
 router.post("/upload_nft", async (req, res) => {
