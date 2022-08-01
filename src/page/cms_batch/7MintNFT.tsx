@@ -11,7 +11,7 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { mint_nft } from '../../redux/actions/production';
 
-const MintNFT = ({ id, set_flag_step_mintNFT, mintCount }: any) => {
+const MintNFT = ({ id, set_flag_step_mintNFT, mintCount, setErrorMsg }: any) => {
   const [progress, setProgress] = useState<any>(0);
   const [flagProcessBtn, setFlagProcessBtn] = useState<any>(false);
 
@@ -46,6 +46,7 @@ const MintNFT = ({ id, set_flag_step_mintNFT, mintCount }: any) => {
       } else {
         setFlagProcessBtn(false);
         set_flag_step_mintNFT(3);
+        setErrorMsg(res.error_msg);
         return;
       }
     });

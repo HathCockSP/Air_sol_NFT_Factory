@@ -474,13 +474,20 @@ router.post("/upload_nft", async (req, res) => {
   console.log("uploading nft...");
   exec(
     `ts-node ./cli/src/candy-machine-v2-cli.ts upload -e devnet -k ~/.config/solana/devnet.json -nc -cp ./config_metadata/uploaded_batch_data/${req.body.id}/config.json -c ${req.body.id} ./config_metadata/uploaded_batch_data/${req.body.id}/assets`,
-    (error) => {
+    async(error) => {
       const endTime = new Date();
       const exeTime = endTime - startTime;
       if (error) {
         console.log(error);
-        // return res.json({ success: false });
-        return res.json({ success: true, exeTime: exeTime });
+        const newError = new errorModel({
+          production_id: req.body.id,
+          event_step: "upload_nft",
+          description: error,
+          event_date: new Date(),
+        });
+        await newError.save();
+        return res.json({ success: false, error_msg: error});
+        // return res.json({ success: true, exeTime: exeTime });
       }
       console.log("Success uploaded NFT.");
       return res.json({ success: true, exeTime: exeTime });
@@ -493,13 +500,19 @@ router.post("/verify_nft", (req, res) => {
   console.log("verifying nft...");
   exec(
     `ts-node ./cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json -c ${req.body.id}`,
-    (error) => {
+    async(error) => {
       const endTime = new Date();
       const exeTime = endTime - startTime;
       if (error) {
-        console.log(`error: ${error.message}`);
-        return res.json({ success: true, exeTime: exeTime });
-        // return res.json({ success: false });
+        console.log(error);
+        const newError = new errorModel({
+          production_id: req.body.id,
+          event_step: "verify_nft",
+          description: error,
+          event_date: new Date(),
+        });
+        await newError.save();
+        return res.json({ success: false, error_msg: error});
       }
       console.log("Success verified NFT.");
       return res.json({ success: true, exeTime: exeTime });
@@ -512,13 +525,19 @@ router.post("/mint_nft", (req, res) => {
   console.log("minting nft...");
   exec(
     `ts-node ./cli/src/candy-machine-v2-cli.ts mint_multiple_tokens -e devnet -k ~/.config/solana/devnet.json -c ${req.body.id} --number ${req.body.count}`,
-    (error) => {
+    async(error) => {
       const endTime = new Date();
       const exeTime = endTime - startTime;
       if (error) {
-        console.log(`error: ${error.message}`);
-        return res.json({ success: true, exeTime: exeTime });
-        // return res.json({ success: false });
+        console.log(error);
+        const newError = new errorModel({
+          production_id: req.body.id,
+          event_step: "mint_nft",
+          description: error,
+          event_date: new Date(),
+        });
+        await newError.save();
+        return res.json({ success: false, error_msg: error});
       }
       console.log("Success minted NFT.");
       return res.json({ success: true, exeTime: exeTime });

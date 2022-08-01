@@ -12,7 +12,7 @@ import "react-circular-progressbar/dist/styles.css";
 
 import { upload_nft } from "../../redux/actions/production";
 
-const UploadNFT = ({ setFlagStep, set_flag_step_uploadNFT, id }: any) => {
+const UploadNFT = ({ setFlagStep, set_flag_step_uploadNFT, id, setErrorMsg }: any) => {
   const [progress, setProgress] = useState<any>(0);
   const [flagProcessBtn, setFlagProcessBtn] = useState<any>(false);
 
@@ -46,6 +46,7 @@ const UploadNFT = ({ setFlagStep, set_flag_step_uploadNFT, id }: any) => {
       } else {
         setFlagProcessBtn(false);
         set_flag_step_uploadNFT(3);
+        setErrorMsg(res.error_msg);
         return;
       }
     });

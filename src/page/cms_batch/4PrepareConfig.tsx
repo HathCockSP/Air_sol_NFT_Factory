@@ -1,5 +1,5 @@
 import { Box } from '@material-ui/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { generate_config } from '../../redux/actions/production';
 import { MdOutlineImportantDevices } from 'react-icons/md';
@@ -93,6 +93,18 @@ const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare, se
     }
   };
 
+  useEffect(()=>{
+    let temp: any = { ...config };
+    if(wallet.connected)
+    {
+      temp.solTreasuryAccount = wallet.publicKey?.toBase58();
+    }
+    else
+    {
+      temp.solTreasuryAccount = '';
+    }
+    set_config(temp);
+  },[])
   return (
     <StyledComponent>
       <InputPanel01>
@@ -184,7 +196,6 @@ const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare, se
                 {...{ placeholder: 'default value is null.' }}
                 onChange={e => {
                   let temp: any = { ...config };
-                  console.log((e.target as HTMLInputElement).value);
                   if ((e.target as HTMLInputElement).value === '') {
                     temp.gatekeeper = null;
                   } else {
@@ -201,7 +212,6 @@ const PrepareConfig = ({id, sSelectedIDs, setFlagStep, set_flag_step_prepare, se
                 {...{ type: 'text' }}
                 {...{
                   value:
-                  wallet.connected? wallet.publicKey?.toBase58():
                     config.solTreasuryAccount === null
                       ? ''
                       : config.solTreasuryAccount,
