@@ -28,7 +28,7 @@ router.get("/get_batch_list", async (req, res) => {
               error_msg: `Can't get batch list from cms!`,
             });
           }
-          res.send({ batch_list: json_data.batch });
+          res.send({ flag_success: "success",batch_list: json_data.batch });
         });
       }
     )
@@ -60,7 +60,7 @@ router.post("/get_batch_data", async (req, res) => {
             });
           }
 
-          res.send({ batch_data: json_data });
+          res.send({flag_success: "success", batch_data: json_data });
         });
       }
     )
