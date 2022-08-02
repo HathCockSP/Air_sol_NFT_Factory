@@ -15,6 +15,7 @@ import * as anchor from '@project-serum/anchor';
 
 const Header = ({connection,rpcHost,network}:any) => {
   const [flag_mint_dropmenu, set_flag_mint_dropmenu] = useState<any>(false);
+  const [flag_jobview_dropmenu, set_flag_jobview_dropmenu] = useState<any>(false);
   const wallet:any = useWallet();
   const [balance, setBalance] = useState<any>();
 
@@ -100,7 +101,7 @@ const Header = ({connection,rpcHost,network}:any) => {
                   navigate('/generate_config');
                 }}
               >
-                Generating
+                GENERATING
               </DropMenuBox01>
               <DropMenuBox01
                 borderBottom={'2px solid #c8c9c9'}
@@ -108,14 +109,14 @@ const Header = ({connection,rpcHost,network}:any) => {
                   navigate('/choose_assets');
                 }}
               >
-                Choosing
+                CHOOSING
               </DropMenuBox01>
               <DropMenuBox01
                 onClick={() => {
                   navigate('/cms_batch');
                 }}
               >
-                CMS Batch
+                CMS BATCH
               </DropMenuBox01>
             </DropMenu>
           ) : (
@@ -124,10 +125,43 @@ const Header = ({connection,rpcHost,network}:any) => {
         </Link01>
         <Link01
           onClick={() => {
-            navigate('/job');
+            set_flag_jobview_dropmenu(!flag_jobview_dropmenu);
+            // navigate('/');
+          }}
+          onMouseLeave={() => {
+            set_flag_jobview_dropmenu(false);
           }}
         >
           JOB VIEW
+          {flag_jobview_dropmenu ? (
+            <DropMenu>
+              <DropMenuBox01
+                borderBottom={'2px solid #c8c9c9'}
+                onClick={() => {
+                  navigate('/generate_config');
+                }}
+              >
+                USERS
+              </DropMenuBox01>
+              <DropMenuBox01
+                borderBottom={'2px solid #c8c9c9'}
+                onClick={() => {
+                  navigate('/choose_assets');
+                }}
+              >
+                PRODUCTION
+              </DropMenuBox01>
+              <DropMenuBox01
+                onClick={() => {
+                  navigate('/cms_batch');
+                }}
+              >
+                ERROR LOGS
+              </DropMenuBox01>
+            </DropMenu>
+          ) : (
+            <></>
+          )}
         </Link01>
         <Link01
           onClick={() => {
