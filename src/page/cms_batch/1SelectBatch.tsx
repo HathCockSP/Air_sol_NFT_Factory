@@ -257,7 +257,7 @@ const SelectBatch = ({
         setFlagStep(0);
       }
     });
-  });
+  },[]);
 
   return (
     <StyledComponent>
