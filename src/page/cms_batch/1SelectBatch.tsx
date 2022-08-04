@@ -146,7 +146,7 @@ const SelectBatch = ({
 }: any) => {
   const [batch_list, set_batch_list] = useState<any>();
   const [batch_num, set_batch_num] = useState<any>(0);
-  const [batch_data, set_batch_data] = useState<any>();
+  const [batch_data, set_batch_data] = useState<any>(null);
   const [production_name, set_production_name] = useState<any>("");
   const [flag_downbtn, set_flag_downbtn] = useState<any>(false);
   const wallet = useWallet();
@@ -243,7 +243,6 @@ const SelectBatch = ({
 
   // table - end
   useEffect(() => {
-    console.log(batch_data);
     get_batch_list().then((res) => {
       let temp_batch_list: any = [];
       if (res.flag_success === "success") {
@@ -270,7 +269,6 @@ const SelectBatch = ({
         setFlagStep(0);
       }
     });
-    console.log(batch_data);
   }, []);
 
   return (
@@ -340,7 +338,7 @@ const SelectBatch = ({
               </TableHead>
               <TableBody>
                 {batch_data === undefined || batch_data === null?<></>:
-                  batch_data(rowsPerPage > 0
+                  batch_data&&(rowsPerPage > 0
                     ? batch_data?.slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage

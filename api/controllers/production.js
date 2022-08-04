@@ -59,7 +59,6 @@ router.post("/get_batch_data", async (req, res) => {
               error_msg: `Can't get batch data from cms!`,
             });
           }
-
           return res.send({flag_success: "success", batch_data: json_data });
         });
       }
