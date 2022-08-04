@@ -337,9 +337,9 @@ const SelectBatch = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {batch_data === undefined || batch_data === null?<></>:
-                  batch_data&&(rowsPerPage > 0
-                    ? batch_data?.slice(
+                {batch_data &&
+                  (rowsPerPage > 0
+                    ? batch_data.slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
                       )
@@ -357,7 +357,7 @@ const SelectBatch = ({
                   ))}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 50 * emptyRows }}>
-                    <TableCell colSpan={6} />
+                    <TableCell colSpan={7} />
                   </TableRow>
                 )}
               </TableBody>

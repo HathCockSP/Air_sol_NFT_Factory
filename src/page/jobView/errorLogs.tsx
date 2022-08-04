@@ -24,8 +24,7 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import { getErrorLogs } from "../../redux/actions/jobview";
-import jwtDecode from 'jwt-decode'
-
+import jwtDecode from "jwt-decode";
 
 const useStyles1 = makeStyles((theme: Theme) =>
   createStyles({
@@ -118,8 +117,11 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 const useStyles2 = makeStyles({
-  table: {
-    minWidth: 500,
+  root: {
+    width: "100%",
+  },
+  container: {
+    maxHeight: "100%",
   },
 });
 
@@ -154,87 +156,83 @@ const ErrorLogs = () => {
   // table end
 
   useEffect(() => {
-    const user1:any = localStorage.getItem('jwtToken');
-    const username:any =(jwtDecode(user1) as any).username;
-    if(username === undefined)
-    {
+    const user1: any = localStorage.getItem("jwtToken");
+    const username: any = (jwtDecode(user1) as any).username;
+    if (username === undefined) {
       return;
-    }
-    else{
-      getErrorLogs().then(res=>{
+    } else {
+      getErrorLogs().then((res) => {
         setErrorlogsData(res.errorlogs);
       });
     }
-    console.log(username)
   }, []);
 
   return (
     <StyledComponent>
       <Workflow>
         <TablePart01>
-        <TableContainer component={Paper}>
-          <Table
-            className={classes.table}
-            aria-label="custom pagination table"
-            stickyHeader
-            style={{height: '100%',background: 'white'}}
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell width="5%">No</TableCell>
-                <TableCell width="5%">ID</TableCell>
-                <TableCell width="25%">Wallet Address</TableCell>
-                <TableCell width="20%">Production Name</TableCell>
-                <TableCell width="25%">Batch Name</TableCell>
-                <TableCell width="5%">Complete</TableCell>
-                <TableCell width="15%">Last Action Date</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {errorlogsData &&
-                (rowsPerPage > 0
-                  ? errorlogsData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : errorlogsData
-                ).map((each: any, index: any) => (
-                  <TableRow key={index} hover>
-                    <TableCell width="5%">{errorlogsData.length<rowsPerPage?index+1:page * rowsPerPage+index+1}</TableCell>
-                    <TableCell width="5%">{each.production_id}</TableCell>
-                    <TableCell width="25%">{each.wallet_address}</TableCell>
-                    <TableCell width="20%">{each.production_name}</TableCell>
-                    <TableCell width="25%">{each.batch_name}</TableCell>
-                    <TableCell width="5%">{each.completed}</TableCell>
-                    <TableCell width="15%">{each.created_date}</TableCell>
-                  </TableRow>
-                ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 50 * emptyRows }}>
-                  <TableCell colSpan={6} />
+          <TableContainer className={classes.container}>
+            <Table
+              aria-label="custom pagination table"
+              stickyHeader
+              style={{ height: "100%", background: "white" }}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell width="5%">No</TableCell>
+                  <TableCell width="5%">ID</TableCell>
+                  <TableCell width="25%">Wallet Address</TableCell>
+                  <TableCell width="20%">Production Name</TableCell>
+                  <TableCell width="25%">Batch Name</TableCell>
+                  <TableCell width="5%">Complete</TableCell>
+                  <TableCell width="15%">Last Action Date</TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  colSpan={7}
-                  count={errorlogsData ? Object.keys(errorlogsData).length : 0}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: { "aria-label": "rows per page" },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {errorlogsData &&
+                  (rowsPerPage > 0
+                    ? errorlogsData.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : errorlogsData
+                  ).map((each: any, index: any) => (
+                    <TableRow key={index} hover>
+                      <TableCell width="5%">
+                        {errorlogsData.length < rowsPerPage
+                          ? index + 1
+                          : page * rowsPerPage + index + 1}
+                      </TableCell>
+                      <TableCell width="5%">{each.production_id}</TableCell>
+                      <TableCell width="25%">{each.wallet_address}</TableCell>
+                      <TableCell width="20%">{each.production_name}</TableCell>
+                      <TableCell width="25%">{each.batch_name}</TableCell>
+                      <TableCell width="5%">{each.completed}</TableCell>
+                      <TableCell width="15%">{each.created_date}</TableCell>
+                    </TableRow>
+                  ))}
+                {/* {emptyRows > 0 && (
+                  <TableRow style={{ height: 50 * emptyRows }}>
+                    <TableCell colSpan={7} />
+                  </TableRow>
+                )} */}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+            colSpan={7}
+            count={errorlogsData ? Object.keys(errorlogsData).length : 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            SelectProps={{
+              inputProps: { "aria-label": "rows per page" },
+              native: true,
+            }}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActions}
+          />
         </TablePart01>
       </Workflow>
     </StyledComponent>
@@ -266,38 +264,42 @@ const Workflow = styled(Box)`
 const TablePart01 = styled(Box)`
   display: flex;
   flex: 1;
-  .MuiTableCell-stickyHeader{
+  flex-direction: column;
+  .MuiTableCell-stickyHeader {
     background: #54c3e7;
     font-weight: 600;
     font-size: 1.2rem;
     color: white;
   }
-  .MuiTableBody-root{
+  .MuiTableBody-root {
     background-color: white;
   }
-  .MuiTableCell-body{
-    color:#176180;
+  .MuiTableCell-body {
+    color: #176180;
     font-size: 1.2rem;
   }
-  .MuiTableCell-root{
+  .MuiTableCell-root {
     border-bottom: 1px solid grey;
   }
-  .MuiTableFooter-root{
+  .MuiTableFooter-root {
     background: #54c3e7;
     font-weight: 600;
     font-size: 1.2rem;
     color: white;
   }
-  .MuiTableContainer-root{
+  .MuiTableContainer-root {
     box-shadow: none;
     border: none;
   }
-  .MuiTableRow-root{
-    &:hover{
-      transition: .2s;
-      background-color: rgba(0,0,0,0.08) !important;
+  .MuiTableRow-root {
+    &:hover {
+      transition: 0.2s;
+      background-color: rgba(0, 0, 0, 0.08) !important;
     }
   }
-`
+  .MuiTablePagination-root {
+    background: #54c3e7;
+  }
+`;
 
 export default ErrorLogs;

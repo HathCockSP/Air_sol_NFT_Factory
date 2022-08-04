@@ -116,8 +116,11 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 const useStyles2 = makeStyles({
-  table: {
-    minWidth: 500,
+  root: {
+    width: "100%",
+  },
+  container: {
+    maxHeight: '100%',
   },
 });
 
@@ -152,7 +155,7 @@ const Users = () => {
   // table end
 
   useEffect(() => {
-    getUsers().then(res=>{
+    getUsers().then((res) => {
       setUsersData(res.users);
     });
   }, []);
@@ -160,70 +163,70 @@ const Users = () => {
   return (
     <StyledComponent>
       <Workflow>
+        <Box display={"flex"} height={"80px"}>123</Box>
         <TablePart01>
-        <TableContainer component={Paper}>
-          <Table
-            className={classes.table}
-            aria-label="custom pagination table"
-            stickyHeader
-            style={{height: '100%',background: 'white'}}
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell width="5%">No</TableCell>
-                <TableCell width="15%">Username</TableCell>
-                <TableCell width="20%">Email</TableCell>
-                <TableCell width="25%">Created Date</TableCell>
-                <TableCell width="5%">Permission</TableCell>
-                <TableCell width="30%"></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {usersData &&
-                (rowsPerPage > 0
-                  ? usersData.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : usersData
-                ).map((each: any, index: any) => (
-                  <TableRow key={index} hover>
-                    <TableCell width="5%">{usersData.length<rowsPerPage?index+1:page * rowsPerPage+index+1}</TableCell>
-                    <TableCell width="20%">{each.username}</TableCell>
-                    <TableCell width="20%">{each.email}</TableCell>
-                    <TableCell width="20%">{each.signup_date}</TableCell>
-                    <TableCell width="5%">{(each.permission).toString()}</TableCell>
-                    <TableCell width="30%">
-                      
-                    </TableCell>
-                  </TableRow>
-                ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 50 * emptyRows }}>
-                  <TableCell colSpan={6} />
+          <TableContainer className={classes.container}>
+            <Table
+              aria-label="custom pagination table"
+              stickyHeader
+              style={{ height: "100%", background: "white" }}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell width="5%">No</TableCell>
+                  <TableCell width="15%">Username</TableCell>
+                  <TableCell width="20%">Email</TableCell>
+                  <TableCell width="25%">Created Date</TableCell>
+                  <TableCell width="5%">Permission</TableCell>
+                  <TableCell width="30%"></TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                  colSpan={7}
-                  count={usersData ? Object.keys(usersData).length : 0}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: { "aria-label": "rows per page" },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {usersData &&
+                  (rowsPerPage > 0
+                    ? usersData.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : usersData
+                  ).map((each: any, index: any) => (
+                    <TableRow key={index} hover>
+                      <TableCell width="5%">
+                        {usersData.length < rowsPerPage
+                          ? index + 1
+                          : page * rowsPerPage + index + 1}
+                      </TableCell>
+                      <TableCell width="20%">{each.username}</TableCell>
+                      <TableCell width="20%">{each.email}</TableCell>
+                      <TableCell width="20%">{each.signup_date}</TableCell>
+                      <TableCell width="5%">
+                        {each.permission.toString()}
+                      </TableCell>
+                      <TableCell width="30%"></TableCell>
+                    </TableRow>
+                  ))}
+                {/* {emptyRows > 0 && (
+                  <TableRow style={{ height: 90 * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )} */}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+            colSpan={6}
+            count={usersData ? Object.keys(usersData).length : 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            SelectProps={{
+              inputProps: { "aria-label": "rows per page" },
+              native: true,
+            }}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActions}
+          />
         </TablePart01>
       </Workflow>
     </StyledComponent>
@@ -250,43 +253,51 @@ const Workflow = styled(Box)`
   overflow-y: auto;
   padding: 50px;
   box-sizing: border-box;
+  flex-direction: column;
 `;
 
 const TablePart01 = styled(Box)`
   display: flex;
   flex: 1;
-  .MuiTableCell-stickyHeader{
+  flex-direction: column;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  .MuiTableCell-stickyHeader {
     background: #54c3e7;
     font-weight: 600;
     font-size: 1.2rem;
     color: white;
   }
-  .MuiTableBody-root{
+  .MuiTableBody-root {
     background-color: white;
   }
-  .MuiTableCell-body{
-    color:#176180;
+  .MuiTableCell-body {
+    color: #176180;
     font-size: 1.2rem;
   }
-  .MuiTableCell-root{
+  .MuiTableCell-root {
     border-bottom: 1px solid grey;
   }
-  .MuiTableFooter-root{
+  .MuiTableFooter-root {
     background: #54c3e7;
     font-weight: 600;
     font-size: 1.2rem;
     color: white;
   }
-  .MuiTableContainer-root{
+  .MuiTableContainer-root {
     box-shadow: none;
     border: none;
   }
-  .MuiTableRow-root{
-    &:hover{
-      transition: .2s;
-      background-color: rgba(0,0,0,0.08) !important;
+  .MuiTableRow-root {
+    &:hover {
+      transition: 0.2s;
+      background-color: rgba(0, 0, 0, 0.08) !important;
     }
   }
-`
+  .MuiTablePagination-root{
+    background: #54c3e7;
+  }
+`;
 
 export default Users;

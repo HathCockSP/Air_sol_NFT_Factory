@@ -45,7 +45,7 @@ const ProductionSchema = new mongoose.Schema({
     default: false,
   },
   created_date: { //same as last_action_date
-    type: Date,
+    type: String,
     require: true,
   }
 });
