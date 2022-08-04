@@ -8,7 +8,7 @@ const { exec } = require("child_process");
 const productionModel = require("../mongodb_scheme/production");
 const errorModel = require("../mongodb_scheme/error_log");
 
-router.get("/get_batch_list", (req, res) => {
+router.get("/get_batch_list", async (req, res) => {
   https
     .get(
       "https://air-client-portal-dev.make-project.fun/filters",
@@ -37,7 +37,7 @@ router.get("/get_batch_list", (req, res) => {
     });
 });
 
-router.post("/get_batch_data", (req, res) => {
+router.post("/get_batch_data", async (req, res) => {
   https
     .get(
       `https://air-client-portal-dev.make-project.fun/buildings?batch=${

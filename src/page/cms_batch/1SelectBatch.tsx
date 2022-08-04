@@ -243,16 +243,17 @@ const SelectBatch = ({
 
   // table - end
   useEffect(() => {
-    console.log(batch_data.length)
     get_batch_list().then((res) => {
+      let batch_list:any = [];
       if (res.flag_success === "success") {
-        let batch_list = [];
+
         for (var i = 1; i < Object.keys(res.batch_list).length; i++) {
           batch_list.push(res.batch_list[i]);
         }
         set_batch_list(batch_list);
         set_sBatchName(batch_list[batch_num]);
       } else if (res.flag_success === "failed") {
+        set_batch_list(batch_list);
         set_flag_step_batch(3);
         set_flag_downbtn(false);
         setErrorMsg(res.error_msg);
@@ -269,7 +270,6 @@ const SelectBatch = ({
         setFlagStep(0);
       }
     });
-    console.log(batch_data.length)
   }, []);
 
   return (
@@ -338,9 +338,9 @@ const SelectBatch = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {batch_data.length>0?
+                {batch_data&&
                   (rowsPerPage > 0
-                    ? batch_data.slice(
+                    ? batch_data?.slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
                       )
@@ -355,7 +355,7 @@ const SelectBatch = ({
                       <TableCell width="10%">{each.rarity}</TableCell>
                       <TableCell width="15%">{each.image.slice(-12)}</TableCell>
                     </TableRow>
-                  )):<></>}
+                  ))}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 50 * emptyRows }}>
                     <TableCell colSpan={6} />
