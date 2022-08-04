@@ -121,7 +121,8 @@ const useStyles2 = makeStyles({
     width: "100%",
   },
   container: {
-    maxHeight: "100%",
+    maxHeight: "500px",
+
   },
 });
 
@@ -221,7 +222,7 @@ const Production = () => {
             </Table>
           </TableContainer>
           <TablePagination
-            style={{ minHeight: "60px" }}
+            style={{  minHeight: "60px" }}
             rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
             colSpan={7}
             count={productionData ? Object.keys(productionData).length : 0}
@@ -244,7 +245,6 @@ const Production = () => {
 const StyledComponent = styled(Box)`
   display: flex;
   width: 100%;
-  flex: 1;
   align-items: center;
   justify-content: center;
   height: 100%;
@@ -265,7 +265,6 @@ const Workflow = styled(Box)`
 
 const TablePart01 = styled(Box)`
   display: flex;
-  flex: 1;
   width: 100%;
   height: 100%;
   flex-direction: column;

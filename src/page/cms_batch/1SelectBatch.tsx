@@ -128,8 +128,15 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 const useStyles2 = makeStyles({
+  root: {
+    width: "100%",
+  },
   table: {
     minWidth: 500,
+  },
+  container: {
+    maxHeight: "500px",
+    minHeight: "300px",
   },
 });
 
@@ -318,7 +325,7 @@ const SelectBatch = ({
       <BatchTable01>
         {/* <Text01>Batch Data:</Text01> */}
         <TablePart01>
-          <TableContainer component={Paper}>
+          <TableContainer className={classes.container}>
             <Table
               className={classes.table}
               aria-label="custom pagination table"
@@ -336,7 +343,7 @@ const SelectBatch = ({
                   <TableCell width="15%">Image</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody style={{ overflow: "auto" }}>
                 {batch_data &&
                   (rowsPerPage > 0
                     ? batch_data.slice(
@@ -355,11 +362,11 @@ const SelectBatch = ({
                       <TableCell width="15%">{each.image.slice(-12)}</TableCell>
                     </TableRow>
                   ))}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 50 * emptyRows }}>
-                    <TableCell colSpan={7} />
-                  </TableRow>
-                )}
+                {/* {emptyRows > 0 && (
+                    <TableRow style={{ height: 50 * emptyRows }}>
+                      <TableCell colSpan={7} />
+                    </TableRow>
+                  )} */}
               </TableBody>
               {/* <TableFooter>
                 <TableRow>
@@ -369,24 +376,21 @@ const SelectBatch = ({
             </Table>
           </TableContainer>
           <TablePagination
-                    rowsPerPageOptions={[
-                      5,
-                      10,
-                      25,
-                      { label: "All", value: -1 },
-                    ]}
-                    colSpan={7}
-                    count={batch_data ? Object.keys(batch_data).length : 0}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                      inputProps: { "aria-label": "rows per page" },
-                      native: true,
-                    }}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
-                  />
+            style={{ minHeight: "60px" }}
+            rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+            component="div"
+            colSpan={7}
+            count={batch_data ? Object.keys(batch_data).length : 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            SelectProps={{
+              inputProps: { "aria-label": "rows per page" },
+              native: true,
+            }}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActions}
+          />
         </TablePart01>
       </BatchTable01>
       <GeneratePart>
