@@ -3,6 +3,7 @@ import axios from "axios";
 export function get_batch_list() {
   return axios.get("/api/production/get_batch_list").then((res) => {
     console.log(res.data.batch_data);
+    console.log(res.data)
     return res.data;
     // console.log(res.data.batch_list);
   });
@@ -13,6 +14,7 @@ export function get_batch_data(batch_num: any) {
     .post("/api/production/get_batch_data", { batch_num })
     .then((res) => {
       console.log(res.data.batch_list);
+
       return res.data;
     });
 }

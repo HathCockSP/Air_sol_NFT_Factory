@@ -21,6 +21,7 @@ router.get("/get_batch_list", async (req, res) => {
         res1.on("end", function () {
           try {
             json_data = JSON.parse(data);
+            console.log("batchlist1:",json_data.batch)
           } catch (error) {
             console.log(error);
             return res.send({
@@ -28,6 +29,7 @@ router.get("/get_batch_list", async (req, res) => {
               error_msg: `Can't get batch list from cms!`,
             });
           }
+          console.log("batchlist2:",json_data.batch)
           return res.send({ flag_success: "success",batch_list: json_data.batch });
         });
       }
@@ -52,6 +54,7 @@ router.post("/get_batch_data", async (req, res) => {
         res1.on("end", function () {
           try {
             json_data = JSON.parse(data);
+            console.log("batchdata1:",json_data)
           } catch (error) {
             console.log(error);
             return res.send({
@@ -59,6 +62,7 @@ router.post("/get_batch_data", async (req, res) => {
               error_msg: `Can't get batch data from cms!`,
             });
           }
+          console.log("batchdata2:",json_data)
           return res.send({flag_success: "success", batch_data: json_data });
         });
       }
