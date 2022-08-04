@@ -244,16 +244,16 @@ const SelectBatch = ({
   // table - end
   useEffect(() => {
     get_batch_list().then((res) => {
-      let batch_list:any = [];
+      let temp_batch_list:any = [];
       if (res.flag_success === "success") {
 
         for (var i = 1; i < Object.keys(res.batch_list).length; i++) {
-          batch_list.push(res.batch_list[i]);
+          temp_batch_list.push(res.batch_list[i]);
         }
-        set_batch_list(batch_list);
-        set_sBatchName(batch_list[batch_num]);
+        set_batch_list(temp_batch_list);
+        set_sBatchName(temp_batch_list[batch_num]);
       } else if (res.flag_success === "failed") {
-        set_batch_list(batch_list);
+        set_batch_list(temp_batch_list);
         set_flag_step_batch(3);
         set_flag_downbtn(false);
         setErrorMsg(res.error_msg);
