@@ -18,6 +18,7 @@ export function get_batch_data(batch_num: any) {
 
 export function download_batch(
   username: any,
+  wallet_address:any,
   production_name: any,
   batch_name: any,
   batch_list_data: any
@@ -25,6 +26,7 @@ export function download_batch(
   return axios
     .post("/api/production/download_batch", {
       username,
+      wallet_address,
       production_name,
       batch_name,
       batch_list_data,

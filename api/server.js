@@ -11,6 +11,7 @@ const GenerateController = require('./controllers/generate');
 const PreviewController = require('./controllers/preview');
 const AuthController = require("./controllers/auth");
 const ProductionController = require("./controllers/production"); 
+const JobviewController = require("./controllers/jobview")
 
 const config = require("./config/key");
 
@@ -36,6 +37,7 @@ app.use('/api/generate', GenerateController);
 app.use('/api/preview', PreviewController);
 app.use('/api/auth', AuthController);
 app.use('/api/production', ProductionController);
+app.use('/api/jobview', JobviewController)
 
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));

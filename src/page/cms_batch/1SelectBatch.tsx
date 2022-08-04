@@ -186,7 +186,8 @@ const SelectBatch = ({
     set_sBatchData(batch_data);
     const user1:any = localStorage.getItem('jwtToken');
     const username: any = (jwtDecode(user1) as any).username;
-    download_batch(username, production_name,batch_list[batch_num], batch_list_data).then(res => {
+    const wallet_address:any = wallet.publicKey?.toBase58();
+    download_batch(username,wallet_address, production_name,batch_list[batch_num], batch_list_data).then(res => {
       if (res.flag_success === 'success') {
         set_flag_step_batch(2);
         set_flag_downbtn(false);
@@ -304,18 +305,13 @@ const SelectBatch = ({
       </InputSelect>
       <BatchTable01>
         {/* <Text01>Batch Data:</Text01> */}
-        <Box
-          display={'flex'}
-          flex={'1'}
-          marginTop={'10px'}
-          width={'100%'}
-          overflow={'auto'}
-        >
-          <TableContainer component={Paper} style={{ maxHeight: '380px' }}>
+        <TablePart01>
+          <TableContainer component={Paper}>
             <Table
               className={classes.table}
               aria-label="custom pagination table"
               stickyHeader
+              style={{height: '100%', background: 'white'}}
             >
               <TableHead>
                 <TableRow>
@@ -378,7 +374,7 @@ const SelectBatch = ({
               </TableFooter>
             </Table>
           </TableContainer>
-        </Box>
+        </TablePart01>
       </BatchTable01>
       <GeneratePart>
         <GenerateButton
@@ -515,4 +511,43 @@ const GenerateButton = styled(Box)`
     background-color: white;
   }
 `;
+
+const TablePart01 = styled(Box)`
+  display: flex;
+  flex: 1;
+  margin-top: 10px;
+  width: 100%;
+  overflow:auto;
+  .MuiTableCell-stickyHeader{
+    background: #54c3e7;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: white;
+  }
+  .MuiTableBody-root{
+    background-color: white;
+  }
+  .MuiTableCell-body{
+    color:#176180;
+    font-size: 1.2rem;
+  }
+  .MuiTableCell-root{
+    border-bottom: 1px solid grey;
+  }
+  .MuiTableFooter-root{
+    background: #54c3e7;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: white;
+  }
+  .MuiTableContainer-root{
+    box-shadow: none;
+    border: none;
+  }
+  .MuiTableRow-root{
+    &:hover{
+      background-color: rgba(0,0,0,0.08);
+    }
+  }
+`
 export default SelectBatch;

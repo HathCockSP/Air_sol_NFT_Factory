@@ -28,7 +28,7 @@ router.get("/get_batch_list", async (req, res) => {
               error_msg: `Can't get batch list from cms!`,
             });
           }
-          res.send({ flag_success: "success",batch_list: json_data.batch });
+          return res.send({ flag_success: "success",batch_list: json_data.batch });
         });
       }
     )
@@ -60,7 +60,7 @@ router.post("/get_batch_data", async (req, res) => {
             });
           }
 
-          res.send({flag_success: "success", batch_data: json_data });
+          return res.send({flag_success: "success", batch_data: json_data });
         });
       }
     )
@@ -254,7 +254,7 @@ router.post("/download_batch", async (req, res) => {
 
   const newProduction = new productionModel({
     username: req.body.username,
-    wallet_address: "",
+    wallet_address: req.body.wallet_address,
     production_name: req.body.production_name,
     batch_name: req.body.batch_name,
     created_date: new Date().toLocaleString(),
@@ -539,6 +539,19 @@ router.post("/mint_nft", (req, res) => {
         await newError.save();
         return res.json({ success: false, error_msg: error});
       }
+      productionModel.findOneAndUpdate(
+        { production_id: req.body.id },
+        { completed: true, created_date:new Date().toLocaleString },
+        function (err, added) {
+          if (err) console.log(err);
+          else {
+            res.send({ flag_success: "success", id: added.production_id });
+            console.log(
+              "******** updated in mongo database successfully *********"
+            );
+          }
+        }
+      );
       console.log("Success minted NFT.");
       return res.json({ success: true, exeTime: exeTime });
     }

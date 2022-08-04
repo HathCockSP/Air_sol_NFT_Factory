@@ -63,7 +63,7 @@ const SignUp = () => {
       username: username,
       email: email,
       password: password,
-      permission: false,
+      permission: true,
     };
     signup(signup_data).then(flag_success => {
       if (flag_success === 'success') {

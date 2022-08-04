@@ -42,6 +42,7 @@ const ProductionSchema = new mongoose.Schema({
   completed: {        
     type: Boolean,
     require: true,
+    default: false,
   },
   created_date: { //same as last_action_date
     type: Date,

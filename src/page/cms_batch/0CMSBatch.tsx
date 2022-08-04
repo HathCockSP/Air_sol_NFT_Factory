@@ -32,6 +32,7 @@ const CMSBatch = () => {
   const [flagStep, setFlagStep] = useState<any>(0);
   const [mintCount, setMintCount] = useState<any>(0);
   const [errorMsg, setErrorMsg] = useState<any>();
+  
 
   const [id, setId] = useState<any>();
 

@@ -57,7 +57,7 @@ const Header = ({connection,rpcHost,network}:any) => {
   useEffect(()=>{
     const user1:any = localStorage.getItem('jwtToken');
     setUsername((jwtDecode(user1) as any).username);
-  }, [wallet])
+  }, [])
   return (
     <StyledComponent>
       <LeftPart01>
@@ -78,7 +78,7 @@ const Header = ({connection,rpcHost,network}:any) => {
       <LinkPart>
         <Link01
           onClick={() => {
-            navigate('/preview');
+            navigate('/');
           }}
         >
           HOME
@@ -138,7 +138,7 @@ const Header = ({connection,rpcHost,network}:any) => {
               <DropMenuBox01
                 borderBottom={'2px solid #c8c9c9'}
                 onClick={() => {
-                  navigate('/generate_config');
+                  navigate('/jusers');
                 }}
               >
                 USERS
@@ -146,14 +146,14 @@ const Header = ({connection,rpcHost,network}:any) => {
               <DropMenuBox01
                 borderBottom={'2px solid #c8c9c9'}
                 onClick={() => {
-                  navigate('/choose_assets');
+                  navigate('/jproduction');
                 }}
               >
                 PRODUCTION
               </DropMenuBox01>
               <DropMenuBox01
                 onClick={() => {
-                  navigate('/cms_batch');
+                  navigate('/jerrorlogs');
                 }}
               >
                 ERROR LOGS
@@ -336,7 +336,7 @@ const DropMenu = styled(Box)`
   position: absolute;
   background-color: white;
   color: #176180;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   width: 100%;
   height: 150px;
   justify-content: center;
