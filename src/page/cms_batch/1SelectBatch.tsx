@@ -529,7 +529,7 @@ const TablePart01 = styled(Box)`
   }
   .MuiTableCell-body{
     color:#176180;
-    font-size: 1.2rem;
+    /* font-size: 1.2rem; */
   }
   .MuiTableCell-root{
     border-bottom: 1px solid grey;
