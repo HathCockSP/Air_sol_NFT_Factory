@@ -325,7 +325,7 @@ const SelectBatch = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {batch_data!== undefined &&
+                {batch_data!== undefined ?
                   (rowsPerPage > 0
                     ? batch_data.slice(
                         page * rowsPerPage,
@@ -342,7 +342,7 @@ const SelectBatch = ({
                       <TableCell width="10%">{each.rarity}</TableCell>
                       <TableCell width="15%">{each.image.slice(-12)}</TableCell>
                     </TableRow>
-                  ))}
+                  )):<></>}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 50 * emptyRows }}>
                     <TableCell colSpan={6} />
