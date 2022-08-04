@@ -120,7 +120,7 @@ const useStyles2 = makeStyles({
     width: "100%",
   },
   container: {
-    maxHeight: '100%',
+    maxHeight: "100%",
   },
 });
 
@@ -163,7 +163,7 @@ const Users = () => {
   return (
     <StyledComponent>
       <Workflow>
-        <Box display={"flex"} height={"80px"}>123</Box>
+        <AddNewUserBox>123</AddNewUserBox>
         <TablePart01>
           <TableContainer className={classes.container}>
             <Table
@@ -171,7 +171,7 @@ const Users = () => {
               stickyHeader
               style={{ height: "100%", background: "white" }}
             >
-              <TableHead>
+              <TableHead style={{ minHeight: "60px" }}>
                 <TableRow>
                   <TableCell width="5%">No</TableCell>
                   <TableCell width="15%">Username</TableCell>
@@ -181,7 +181,7 @@ const Users = () => {
                   <TableCell width="30%"></TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody style={{ overflow: "auto" }}>
                 {usersData &&
                   (rowsPerPage > 0
                     ? usersData.slice(
@@ -214,6 +214,7 @@ const Users = () => {
             </Table>
           </TableContainer>
           <TablePagination
+            style={{ minHeight: "60px" }}
             rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
             colSpan={6}
             count={usersData ? Object.keys(usersData).length : 0}
@@ -271,6 +272,7 @@ const TablePart01 = styled(Box)`
   }
   .MuiTableBody-root {
     background-color: white;
+    overflow: auto;
   }
   .MuiTableCell-body {
     color: #176180;
@@ -295,9 +297,21 @@ const TablePart01 = styled(Box)`
       background-color: rgba(0, 0, 0, 0.08) !important;
     }
   }
-  .MuiTablePagination-root{
+  .MuiTablePagination-root {
+    min-height: 60px;
     background: #54c3e7;
   }
+  .MuiTableHead-root {
+    min-height: 60px;
+  }
+`;
+
+const AddNewUserBox = styled(Box)`
+  display: flex;
+  width: 100%;
+  height: 80px;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 export default Users;

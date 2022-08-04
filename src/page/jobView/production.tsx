@@ -116,13 +116,12 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-
 const useStyles2 = makeStyles({
   root: {
     width: "100%",
   },
   container: {
-    maxHeight: '100%',
+    maxHeight: "100%",
   },
 });
 
@@ -184,7 +183,7 @@ const Production = () => {
               stickyHeader
               style={{ height: "100%", background: "white" }}
             >
-              <TableHead>
+              <TableHead style={{ minHeight: "60px" }}>
                 <TableRow>
                   <TableCell width="5%">No</TableCell>
                   <TableCell width="5%">ID</TableCell>
@@ -195,7 +194,7 @@ const Production = () => {
                   <TableCell width="15%">Last Action Date</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody style={{ overflow: "auto" }}>
                 {productionData &&
                   (rowsPerPage > 0
                     ? productionData.slice(
@@ -222,26 +221,20 @@ const Production = () => {
             </Table>
           </TableContainer>
           <TablePagination
-                    rowsPerPageOptions={[
-                      5,
-                      10,
-                      25,
-                      { label: "All", value: -1 },
-                    ]}
-                    colSpan={7}
-                    count={
-                      productionData ? Object.keys(productionData).length : 0
-                    }
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                      inputProps: { "aria-label": "rows per page" },
-                      native: true,
-                    }}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
-                  />
+            style={{ minHeight: "60px" }}
+            rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+            colSpan={7}
+            count={productionData ? Object.keys(productionData).length : 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            SelectProps={{
+              inputProps: { "aria-label": "rows per page" },
+              native: true,
+            }}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActions}
+          />
         </TablePart01>
       </Workflow>
     </StyledComponent>
@@ -309,7 +302,7 @@ const TablePart01 = styled(Box)`
       background-color: rgba(0, 0, 0, 0.08) !important;
     }
   }
-  .MuiTablePagination-root{
+  .MuiTablePagination-root {
     background: #54c3e7;
   }
 `;

@@ -177,7 +177,7 @@ const ErrorLogs = () => {
               stickyHeader
               style={{ height: "100%", background: "white" }}
             >
-              <TableHead>
+              <TableHead style={{ minHeight: "60px" }}>
                 <TableRow>
                   <TableCell width="5%">No</TableCell>
                   <TableCell width="5%">ID</TableCell>
@@ -188,7 +188,7 @@ const ErrorLogs = () => {
                   <TableCell width="15%">Last Action Date</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody style={{ overflow: "auto" }}>
                 {errorlogsData &&
                   (rowsPerPage > 0
                     ? errorlogsData.slice(
@@ -220,6 +220,7 @@ const ErrorLogs = () => {
             </Table>
           </TableContainer>
           <TablePagination
+                      style={{ minHeight: "60px" }}
             rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
             colSpan={7}
             count={errorlogsData ? Object.keys(errorlogsData).length : 0}

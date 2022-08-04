@@ -361,9 +361,14 @@ const SelectBatch = ({
                   </TableRow>
                 )}
               </TableBody>
-              <TableFooter>
+              {/* <TableFooter>
                 <TableRow>
-                  <TablePagination
+                  
+                </TableRow>
+              </TableFooter> */}
+            </Table>
+          </TableContainer>
+          <TablePagination
                     rowsPerPageOptions={[
                       5,
                       10,
@@ -382,10 +387,6 @@ const SelectBatch = ({
                     onRowsPerPageChange={handleChangeRowsPerPage}
                     ActionsComponent={TablePaginationActions}
                   />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </TableContainer>
         </TablePart01>
       </BatchTable01>
       <GeneratePart>
@@ -530,6 +531,7 @@ const TablePart01 = styled(Box)`
   margin-top: 10px;
   width: 100%;
   overflow: auto;
+  flex-direction: column;
   .MuiTableCell-stickyHeader {
     background: #54c3e7;
     font-weight: 600;
@@ -560,6 +562,13 @@ const TablePart01 = styled(Box)`
     &:hover {
       background-color: rgba(0, 0, 0, 0.08);
     }
+  }
+  .MuiTablePagination-root {
+    min-height: 60px;
+    background: #54c3e7;
+  }
+  .MuiTableHead-root {
+    min-height: 60px;
   }
 `;
 export default SelectBatch;
