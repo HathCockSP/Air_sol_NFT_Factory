@@ -171,9 +171,9 @@ const Users = () => {
             <TableHead>
               <TableRow>
                 <TableCell width="5%">No</TableCell>
-                <TableCell width="20%">Username</TableCell>
+                <TableCell width="15%">Username</TableCell>
                 <TableCell width="20%">Email</TableCell>
-                <TableCell width="20%">Created Date</TableCell>
+                <TableCell width="25%">Created Date</TableCell>
                 <TableCell width="5%">Permission</TableCell>
                 <TableCell width="30%"></TableCell>
               </TableRow>
