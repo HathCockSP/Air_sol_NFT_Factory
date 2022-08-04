@@ -292,6 +292,10 @@ const useStyles = makeStyles((theme: Theme) =>
       top: 20,
       width: 1,
     },
+    container: {
+      maxHeight: "500px",
+      minHeight: "300px",
+    },
   }),
 );
 
@@ -433,26 +437,22 @@ const UploadBatch = ({
   return (
     <StyledComponent>
       <BatchTable01>
+        <TablePart01>
         {/* <Text01>Batch Data:</Text01> */}
-        <Box
-          display={'flex'}
-          flex={'1'}
-          marginTop={'10px'}
-          width={'100%'}
-          overflow={'auto'}
-        >
-          <Paper className={classes.paper}>
+
+          {/* <Paper className={classes.paper}> */}
             <EnhancedTableToolbar
               numSelected={sBatchData && selected.length}
               batch_name={sBatchName}
             />
-            <TableContainer style={{ maxHeight: '320px' }}>
+            <TableContainer className={classes.container}>
               <Table
                 className={classes.table}
                 aria-labelledby="tableTitle"
                 size={dense ? 'medium' : 'small'}
                 aria-label="enhanced table"
                 stickyHeader
+                style={{ height: "100%", background: "white" }}
               >
                 <EnhancedTableHead
                   classes={classes}
@@ -463,7 +463,7 @@ const UploadBatch = ({
                   onRequestSort={handleRequestSort}
                   rowCount={sBatchData && Object.keys(sBatchData).length}
                 />
-                <TableBody>
+              <TableBody style={{ overflow: "auto" }}>
                   {sBatchData &&
                     stableSort(sBatchData, getComparator(order, orderBy))
                       .slice(
@@ -510,15 +510,16 @@ const UploadBatch = ({
                           </TableRow>
                         );
                       })}
-                  {emptyRows > 0 && (
+                  {/* {emptyRows > 0 && (
                     <TableRow style={{ height: (dense ? 30 : 50) * emptyRows }}>
                       <TableCell colSpan={6} />
                     </TableRow>
-                  )}
+                  )} */}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
+            
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               component="div"
               count={sBatchData && Object.keys(sBatchData).length}
@@ -527,12 +528,12 @@ const UploadBatch = ({
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-          </Paper>
+          {/* </Paper> */}
           {/* <FormControlLabel
             control={<Switch checked={dense} onChange={handleChangeDense} />}
             label="Dense padding"
           /> */}
-        </Box>
+          </TablePart01>
       </BatchTable01>
       <GeneratePart>
         <GenerateButton
@@ -573,7 +574,7 @@ const BatchTable01 = styled(Box)`
   display: flex;
   width: 100%;
   flex: 1;
-  /* margin-top: 20px; */
+  margin-top: 10px;
   flex-direction: column;
   overflow-y: auto;
 `;
@@ -605,6 +606,54 @@ const GenerateButton = styled(Box)`
     transition: 0.5s;
     color: #176180;
     background-color: white;
+  }
+`;
+
+
+const TablePart01 = styled(Box)`
+  display: flex;
+  flex: 1;
+  margin-top: 10px;
+  width: 100%;
+  overflow: auto;
+  flex-direction: column;
+  .MuiTableCell-stickyHeader {
+    background: #54c3e7;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: white;
+  }
+  .MuiTableBody-root {
+    background-color: white;
+  }
+  .MuiTableCell-body {
+    color: #176180;
+    /* font-size: 1.2rem; */
+  }
+  .MuiTableCell-root {
+    border-bottom: 1px solid grey;
+  }
+  .MuiTableFooter-root {
+    background: #54c3e7;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: white;
+  }
+  .MuiTableContainer-root {
+    box-shadow: none;
+    border: none;
+  }
+  .MuiTableRow-root {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+  }
+  .MuiTablePagination-root {
+    min-height: 60px;
+    background: #54c3e7;
+  }
+  .MuiTableHead-root {
+    min-height: 60px;
   }
 `;
 export default UploadBatch;
