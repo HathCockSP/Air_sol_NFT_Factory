@@ -13,7 +13,7 @@ export function get_batch_data(batch_num: any) {
   return axios
     .post("/api/production/get_batch_data", { batch_num })
     .then((res) => {
-      console.log(res.data.batch_data);
+      console.log(res.data);
 
       return res.data;
     });
