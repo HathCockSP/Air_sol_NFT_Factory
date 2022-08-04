@@ -325,7 +325,7 @@ const SelectBatch = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {batch_data!== undefined ?
+                {batch_data!== undefined ||batch_data!== null ?
                   (rowsPerPage > 0
                     ? batch_data.slice(
                         page * rowsPerPage,
