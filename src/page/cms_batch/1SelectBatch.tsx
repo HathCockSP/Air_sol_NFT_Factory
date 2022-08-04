@@ -244,9 +244,8 @@ const SelectBatch = ({
   // table - end
   useEffect(() => {
     get_batch_list().then((res) => {
-      let temp_batch_list:any = [];
+      let temp_batch_list: any = [];
       if (res.flag_success === "success") {
-
         for (var i = 1; i < Object.keys(res.batch_list).length; i++) {
           temp_batch_list.push(res.batch_list[i]);
         }
@@ -338,7 +337,7 @@ const SelectBatch = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {batch_data&&
+                {batch_data &&
                   (rowsPerPage > 0
                     ? batch_data?.slice(
                         page * rowsPerPage,
