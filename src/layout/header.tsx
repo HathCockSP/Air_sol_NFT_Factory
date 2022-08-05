@@ -253,8 +253,8 @@ const ConnectButton = styled(WalletDialogButton)`
   font-size: 1.1rem !important;
   background-color: #54c3e7 !important;
   font-weight: bold !important;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     color: #176180 !important;
     background-color: white !important;
   }
@@ -272,8 +272,8 @@ const SignOutBtn = styled(Box)`
   /* background-color: #54c3e7 ; */
   font-weight: bold;
   cursor: pointer;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     text-shadow: 0 0px 10px white;
   }
 `;
@@ -324,8 +324,8 @@ const Link01 = styled(Box)`
   color: white;
   font-size: 1.5rem;
   cursor: pointer;
+  transition: 0.3s;
   &:hover {
-    transition: 0.3s;
     color: #54c3e7;
   }
 `;
@@ -351,8 +351,8 @@ const DropMenuBox01 = styled(Box)`
   flex: 1;
   justify-content: center;
   align-items: center;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     color: #54c3e7;
     /* font-weight: bold; */
   }

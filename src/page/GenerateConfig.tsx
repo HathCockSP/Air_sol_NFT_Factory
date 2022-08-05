@@ -609,8 +609,8 @@ const GenerateButton = styled(Box)`
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     color: #176180;
     background-color: white;
   }

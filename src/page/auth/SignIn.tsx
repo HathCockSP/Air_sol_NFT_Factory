@@ -179,7 +179,6 @@ const HeadText01 = styled(Box)`
   margin-top: 40px;
   font-size: 1.3rem;
   font-weight: bold;
-
   color: white;
 `;
 
@@ -204,8 +203,8 @@ const GenerateButton = styled(Box)`
   margin-bottom: 50px;
   /* border-radius: 8px; */
   cursor: pointer;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     color: #176180;
     background-color: white;
   }
@@ -226,8 +225,8 @@ const ForgotPart01 = styled(Box)`
   margin-top: 15px;
   font-size: 1.1rem;
   cursor: pointer;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     text-shadow: 0 0px 5px white;
   }
 `;
@@ -240,8 +239,8 @@ const SignUpBox = styled(Box)`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     text-shadow: 0 0px 5px white;
   }
 `;

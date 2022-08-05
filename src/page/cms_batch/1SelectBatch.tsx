@@ -488,7 +488,6 @@ const Text01 = styled(Box)`
   display: flex;
   align-items: center;
   color: white;
-
   font-size: 1.3rem;
 `;
 
@@ -522,8 +521,8 @@ const GenerateButton = styled(Box)`
   background-color: #54c3e7;
   /* border-radius: 8px; */
   cursor: pointer;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     color: #176180;
     background-color: white;
   }

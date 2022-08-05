@@ -163,7 +163,13 @@ const Users = () => {
   return (
     <StyledComponent>
       <Workflow>
-        <AddNewUserBox>123</AddNewUserBox>
+        <UserSearchAddBox>
+          <SearchBox></SearchBox>
+          <AddNewUserBox>
+            <AddButton01>Add User</AddButton01>
+          </AddNewUserBox>
+        </UserSearchAddBox>
+
         <TablePart01>
           <TableContainer className={classes.container}>
             <Table
@@ -306,12 +312,40 @@ const TablePart01 = styled(Box)`
   }
 `;
 
-const AddNewUserBox = styled(Box)`
+const UserSearchAddBox = styled(Box)`
   display: flex;
   width: 100%;
   height: 80px;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
 `;
 
+const AddNewUserBox = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SearchBox = styled(Box)`
+  display: flex;
+`;
+
+const AddButton01 = styled(Box)`
+  display: flex;
+  padding: 10px 30px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  background-color: #54c3e7;
+  /* border-radius: 8px; */
+  transition: 0.5s;
+  cursor: pointer;
+  &:hover {
+    color: #176180;
+    background-color: white;
+  }
+`;
 export default Users;

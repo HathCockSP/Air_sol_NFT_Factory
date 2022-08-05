@@ -147,9 +147,9 @@ const GenerateButton = styled(Box)`
   font-weight: bold;
   background-color: #54c3e7;
   /* border-radius: 8px; */
+  transition: 0.5s;
   cursor: pointer;
   &:hover {
-    transition: 0.5s;
     color: #176180;
     background-color: white;
   }

@@ -572,8 +572,9 @@ const Button01 = styled(Box)`
   background-color: #0d9d31;
   font-size: 1.2rem;
   font-weight: bold;
+  transition: 0.5s;
+
   &:hover {
-    transition: 0.5s;
     color: #0d9d31;
     background-color: white;
   }

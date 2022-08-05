@@ -327,8 +327,8 @@ const ButtonSelect01 = styled(Box)`
   font-size: 2rem;
   color: white;
   cursor: pointer;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     color: #176180;
     background-color: white;
   }
@@ -384,8 +384,8 @@ const ShowImage01 = styled(Box)`
   border: 2px solid #176180;
   background-color: #176180;
   cursor: pointer;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     box-shadow: rgb(255 255 255) 0px 0px 10px;
     border-radius: 8px;
     background-color: white;
@@ -414,8 +414,8 @@ const GenerateButton = styled(Box)`
   background-color: #54c3e7;
   /* border-radius: 8px; */
   cursor: pointer;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     color: #176180;
     background-color: white;
   }
