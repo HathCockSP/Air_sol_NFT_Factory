@@ -258,25 +258,29 @@ const SelectBatch = ({
         }
         set_batch_list(temp_batch_list);
         set_sBatchName(temp_batch_list[batch_num]);
+        return;
       } else if (res.flag_success === "failed") {
         set_batch_list(temp_batch_list);
         set_flag_step_batch(3);
         set_flag_downbtn(false);
         setErrorMsg(res.error_msg);
         setFlagStep(0);
+        return;
       }
     });
     get_batch_data(batch_num).then((res) => {
       if (res.flag_success === "success") {
         set_batch_data(res.batch_data);
+        return;
       } else if (res.flag_success === "failed") {
         set_flag_step_batch(3);
         set_flag_downbtn(false);
         setErrorMsg(res.error_msg);
         setFlagStep(0);
+        return;
       }
     });
-  }, [batch_data]);
+  }, []);
 
   return (
     <StyledComponent>
