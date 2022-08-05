@@ -168,7 +168,6 @@ const GenerateButton = styled(Box)`
   /* border-radius: 8px; */
   cursor: pointer;
   transition: 0.5s;
-
   &:hover {
     color: #176180;
     background-color: white;
