@@ -23,7 +23,13 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
-import { getUsers } from "../../redux/actions/jobview";
+import { getUsers, removeUser } from "../../redux/actions/jobview";
+import {
+  RiUserAddFill,
+  RiUserSettingsFill,
+  RiUserUnfollowFill,
+} from "react-icons/ri";
+import { remove } from "lodash";
 
 const useStyles1 = makeStyles((theme: Theme) =>
   createStyles({
@@ -154,6 +160,10 @@ const Users = () => {
 
   // table end
 
+  const handleRemoveUser = (username: any)=>{
+    removeUser(username);
+  }
+
   useEffect(() => {
     getUsers().then((res) => {
       setUsersData(res.users);
@@ -166,7 +176,12 @@ const Users = () => {
         <UserSearchAddBox>
           <SearchBox></SearchBox>
           <AddNewUserBox>
-            <AddButton01>Add User</AddButton01>
+            <AddButton01>
+              <RiUserAddFill fontSize={"1.3rem"} fontWeight={"800"} />{" "}
+              <Box display={"flex"} ml={"5px"}>
+                Add
+              </Box>
+            </AddButton01>
           </AddNewUserBox>
         </UserSearchAddBox>
 
@@ -180,7 +195,11 @@ const Users = () => {
               <TableHead style={{ minHeight: "60px" }}>
                 <TableRow>
                   <TableCell width="5%">No</TableCell>
-                  <TableCell width="15%">Username</TableCell>
+                  <TableCell width="15%">
+                    <Box display={"flex"} width={"100%"}>
+
+                    </Box>
+                  </TableCell>
                   <TableCell width="20%">Email</TableCell>
                   <TableCell width="25%">Created Date</TableCell>
                   <TableCell width="5%">Permission</TableCell>
@@ -208,7 +227,31 @@ const Users = () => {
                       <TableCell width="5%">
                         {each.permission.toString()}
                       </TableCell>
-                      <TableCell width="30%"></TableCell>
+                      <TableCell width="30%" >
+                        <Box display={"flex"} width={"100%"} justifyContent={"center"}>
+                          <Editutton01 mr={"10px"}>
+                            <RiUserSettingsFill
+                              fontSize={"1.3rem"}
+                              fontWeight={"800"}
+                            />{" "}
+                            <Box display={"flex"} ml={"5px"}>
+                              Edit
+                            </Box>
+                          </Editutton01>
+                          <RemoveButton01>
+                            <RiUserUnfollowFill
+                              fontSize={"1.3rem"}
+                              fontWeight={"800"}
+                            />{" "}
+                            <Box display={"flex"} ml={"5px"}
+                            onClick={()=>{
+                              handleRemoveUser(each.username);
+                            }}>
+                              Remove
+                            </Box>
+                          </RemoveButton01>
+                        </Box>
+                      </TableCell>
                     </TableRow>
                   ))}
                 {/* {emptyRows > 0 && (
@@ -332,7 +375,8 @@ const SearchBox = styled(Box)`
 
 const AddButton01 = styled(Box)`
   display: flex;
-  padding: 10px 30px;
+  width: 140px;
+  height: 40px;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
@@ -345,6 +389,46 @@ const AddButton01 = styled(Box)`
   cursor: pointer;
   &:hover {
     color: #176180;
+    background-color: white;
+  }
+`;
+
+const Editutton01 = styled(Box)`
+  display: flex;
+  width: 140px;
+  height: 40px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  background-color: #20b451;
+  /* border-radius: 8px; */
+  transition: 0.5s;
+  cursor: pointer;
+  &:hover {
+    color: #20b451;
+    background-color: white;
+  }
+`;
+
+const RemoveButton01 = styled(Box)`
+  display: flex;
+  width: 140px;
+  height: 40px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  background-color: #c52020;
+  /* border-radius: 8px; */
+  transition: 0.5s;
+  cursor: pointer;
+  &:hover {
+    color: #c52020;
     background-color: white;
   }
 `;

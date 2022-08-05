@@ -38,4 +38,16 @@ router.get("/get_errorlogs", async(req, res) => {
     }
 });
 
+router.post("/remove_user", async(req, res) => {
+    try{
+        const errorlogs = await errorlogsModal.find();
+        return res.json({errorlogs: errorlogs});
+    }
+    catch(error)
+    {
+        console.log(error);
+    }
+});
+
+
 module.exports = router;

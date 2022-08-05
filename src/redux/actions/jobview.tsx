@@ -17,3 +17,9 @@ export function getErrorLogs() {
     return res.data;
   });
 }
+
+export function removeUser(username: any) {
+  return axios.post("/api/jobview/remove_user", {username}).then((res) => {
+    return res.data;
+  });
+}
