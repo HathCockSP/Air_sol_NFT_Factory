@@ -40,12 +40,13 @@ router.get("/get_errorlogs", async(req, res) => {
 
 router.post("/remove_user", async(req, res) => {
     try{
-        const errorlogs = await errorlogsModal.find();
-        return res.json({errorlogs: errorlogs});
+        await usersModal.findOneAndRemove({username: req.body.username});
+        return res.json({flag_success:'success'});
     }
     catch(error)
     {
         console.log(error);
+        return res.json({flag_success:'failed'});
     }
 });
 

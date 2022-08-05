@@ -573,7 +573,6 @@ const Button01 = styled(Box)`
   font-size: 1.2rem;
   font-weight: bold;
   transition: 0.5s;
-
   &:hover {
     color: #0d9d31;
     background-color: white;
@@ -614,8 +613,8 @@ const GenerateButton = styled(Box)`
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
+  transition: 0.5s;
   &:hover {
-    transition: 0.5s;
     color: #176180;
     background-color: white;
   }
