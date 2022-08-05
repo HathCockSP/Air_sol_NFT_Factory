@@ -303,8 +303,14 @@ const SelectBatch = ({
                   set_sBatchName(batch_list[e.target.value]);
                   set_batch_num(e.target.value);
                   get_batch_data(e.target.value).then((res) => {
-                    set_batch_data(res.batch_data);
-                    // set_sBatchData(data);
+                    if (res.flag_success === "success") {
+                      set_batch_data(res.batch_data);
+                    } else if (res.flag_success === "failed") {
+                      set_flag_step_batch(3);
+                      set_flag_downbtn(false);
+                      setErrorMsg(res.error_msg);
+                      setFlagStep(0);
+                    }
                   });
                 }}
               >
