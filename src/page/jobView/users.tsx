@@ -234,7 +234,7 @@ const Users = () => {
     signup(signup_data).then((flag_success) => {
       if (flag_success === "success") {
         NotificationManager.info(
-          "Added new user, please wait for approval.",
+          "Added new user.",
           "Success!",
           3000
         );
