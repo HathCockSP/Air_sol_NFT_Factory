@@ -102,8 +102,6 @@ router.post("/download_batch", async (req, res) => {
       method: "GET",
       responseType: "stream",
     }).then((response) => {
-      console.log(response.data);
-      console.log(JSON.parse(response.data))
       response.data.pipe(
         fs.createWriteStream(
           `./config_metadata/batch_data/${req.body.batch_name}/${temp}/config.json`
