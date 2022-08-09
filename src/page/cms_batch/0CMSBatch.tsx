@@ -41,19 +41,19 @@ const CMSBatch = () => {
       <Workflow>
         <StepListBox>
           <ContentBox01>
-            <EachStep str={'Select batch'} flag_step={flag_step_batch} nextstep={'true'} errorMsg={errorMsg} />
-            <ArrowDownBox nextstep={'true'} />
-            <EachStep str={'Upload batch'} flag_step={flag_step_upload} nextstep={flag_step_batch===2?'true': 'false'} errorMsg={errorMsg} />
-            <ArrowDownBox nextstep={flag_step_batch===2?'true': 'false'} />
-            <EachStep str={'Review NFT'} flag_step={flag_step_review} nextstep={flag_step_upload===2?'true': 'false'} errorMsg={errorMsg} />
-            <ArrowDownBox nextstep={flag_step_upload===2?'true': 'false'} />
-            <EachStep str={'Prepare config'} flag_step={flag_step_prepare} nextstep={flag_step_review===2?'true': 'false'} errorMsg={errorMsg} />
-            <ArrowDownBox nextstep={flag_step_review===2?'true': 'false'} />
-            <EachStep str={'Upload NFT'} flag_step={flag_step_uploadNFT} nextstep={flag_step_prepare===2?'true': 'false'} errorMsg={errorMsg} />
-            <ArrowDownBox nextstep={flag_step_prepare===2?'true': 'false'} />
-            <EachStep str={'Verify NFT'} flag_step={flag_step_verifyNFT} nextstep={flag_step_uploadNFT===2?'true': 'false'} errorMsg={errorMsg} />
-            <ArrowDownBox nextstep={flag_step_uploadNFT===2?'true': 'false'} />
-            <EachStep str={'Mint NFT'} flag_step={flag_step_mintNFT} nextstep={flag_step_verifyNFT===2?'true': 'false'} errorMsg={errorMsg} />
+            <EachStep str={'Select batch'} flag_step={flag_step_batch} nextstep={true} errorMsg={errorMsg} />
+            <ArrowDownBox nextstep={true} />
+            <EachStep str={'Upload batch'} flag_step={flag_step_upload} nextstep={flag_step_batch===2?true: false} errorMsg={errorMsg} />
+            <ArrowDownBox nextstep={flag_step_batch===2?true: false} />
+            <EachStep str={'Review NFT'} flag_step={flag_step_review} nextstep={flag_step_upload===2?true: false} errorMsg={errorMsg} />
+            <ArrowDownBox nextstep={flag_step_upload===2?true: false} />
+            <EachStep str={'Prepare config'} flag_step={flag_step_prepare} nextstep={flag_step_review===2?true: false} errorMsg={errorMsg} />
+            <ArrowDownBox nextstep={flag_step_review===2?true: false} />
+            <EachStep str={'Upload NFT'} flag_step={flag_step_uploadNFT} nextstep={flag_step_prepare===2?true: false} errorMsg={errorMsg} />
+            <ArrowDownBox nextstep={flag_step_prepare===2?true: false} />
+            <EachStep str={'Verify NFT'} flag_step={flag_step_verifyNFT} nextstep={flag_step_uploadNFT===2?true: false} errorMsg={errorMsg} />
+            <ArrowDownBox nextstep={flag_step_uploadNFT===2?true: false} />
+            <EachStep str={'Mint NFT'} flag_step={flag_step_mintNFT} nextstep={flag_step_verifyNFT===2?true: false} errorMsg={errorMsg} />
           </ContentBox01>
         </StepListBox>
         <StepInfoBox>
