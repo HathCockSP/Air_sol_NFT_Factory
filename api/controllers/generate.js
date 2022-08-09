@@ -9,6 +9,11 @@ const { exec } = require('child_process');
 
 router.post('/generate_config', (req, res) => {
   console.log('generating config file...');
+  if (!fs.existsSync(`../public/config_metadata`)) {
+    fs.mkdirSync(`../public/config_metadata`, {
+      recursive: true,
+    });
+  }
   fs.writeFile(
     '../public/config_metadata/config.json',
     JSON.stringify(req.body, null, 2),
@@ -22,6 +27,11 @@ router.post('/generate_config', (req, res) => {
 
 router.post('/generate_metadata', (req, res) => {
   console.log('generating metadata file...');
+  if (!fs.existsSync(`../public/config_metadata/metadata_assets`)) {
+    fs.mkdirSync(`../public/config_metadata/metadata_assets`, {
+      recursive: true,
+    });
+  }
   for (var i = 0; i < Object.keys(req.body).length; i++) {
     fs.writeFile(
       `../public/config_metadata/metadata_assets/${i + '.json'}`,
@@ -37,7 +47,7 @@ router.post('/generate_metadata', (req, res) => {
 router.post('/upload_nft', (req, res) => {
   console.log('uploading nft...');
   exec(
-    'ts-node ../../cli/src/candy-machine-v2-cli.ts upload -e devnet -k ~/.config/solana/devnet.json -nc -cp ../public/config_metadata/config.json -c example ../public/config_metadata/metadata_assets/',
+    'ts-node ./cli/src/candy-machine-v2-cli.ts upload -e devnet -k ~/.config/solana/devnet.json -nc -cp ../public/config_metadata/config.json -c example ../public/config_metadata/metadata_assets/',
     error => {
       if (error) {
         console.log(`error: ${error.message}`);
@@ -52,7 +62,7 @@ router.post('/upload_nft', (req, res) => {
 router.post('/verify_nft', (req, res) => {
   console.log('verifying nft...');
   exec(
-    'ts-node ../../cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json -c example',
+    'ts-node ./cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json -c example',
     error => {
       if (error) {
         console.log(`error: ${error.message}`);
@@ -67,7 +77,7 @@ router.post('/verify_nft', (req, res) => {
 router.post('/mint_nft', (req, res) => {
   console.log('minting nft...');
   exec(
-    `ts-node ../../cli/src/candy-machine-v2-cli.ts mint_multiple_tokens -e devnet -k ~/.config/solana/devnet.json -c example --number ${req.body.count}`,
+    `ts-node ./cli/src/candy-machine-v2-cli.ts mint_multiple_tokens -e devnet -k ~/.config/solana/devnet.json -c example --number ${req.body.count}`,
     error => {
       if (error) {
         console.log(`error: ${error.message}`);
@@ -140,15 +150,3 @@ router.post(
 );
 
 module.exports = router;
-
-// webpack server
-// module.exports = {
-//   devServer: {
-//     watchOptions: {
-//       ignored: [
-//         path.resolve(__dirname, 'public/config_metadata'),
-//       ],
-//     },
-//   },
-//   router
-// };

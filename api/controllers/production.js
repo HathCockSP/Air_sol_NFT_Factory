@@ -540,7 +540,7 @@ router.post("/mint_nft", (req, res) => {
       }
       productionModel.findOneAndUpdate(
         { production_id: req.body.id },
-        { completed: true, created_date:new Date().toLocaleString },
+        { completed: true, 'created_date':new Date().toLocaleString },
         function (err, added) {
           if (err) console.log(err);
           else {
