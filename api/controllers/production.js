@@ -28,7 +28,10 @@ router.get("/get_batch_list", async (req, res) => {
               error_msg: `Can't get batch list from cms!`,
             });
           }
-          return res.send({ flag_success: "success",batch_list: json_data.batch });
+          return res.send({
+            flag_success: "success",
+            batch_list: json_data.batch,
+          });
         });
       }
     )
@@ -59,7 +62,7 @@ router.post("/get_batch_data", async (req, res) => {
               error_msg: `Can't get batch data from cms!`,
             });
           }
-          return res.send({flag_success: "success", batch_data: json_data });
+          return res.send({ flag_success: "success", batch_data: json_data });
         });
       }
     )
@@ -97,17 +100,31 @@ router.post("/download_batch", async (req, res) => {
     }
     let temp = req.body.batch_list_data[i].id;
     let config_url = `https://air-client-portal-dev.make-project.fun/building/config/${req.body.batch_list_data[i].id}`;
-    Axios({
-      url: config_url,
-      method: "GET",
-      responseType: "stream",
-    }).then((response) => {
-      response.data.pipe(
-        fs.createWriteStream(
-          `./config_metadata/batch_data/${req.body.batch_name}/${temp}/config.json`
-        )
-      );
-    });
+    let tempResponse;
+    try{
+      tempResponse = await Axios({
+        url: config_url,
+        method: "GET",
+        responseType: "stream",
+      });
+    }
+    catch(error)
+    {
+      console.log(error);
+    }
+    console.log(tempResponse.data);
+    console.log(JSON.parse(tempResponse.data));
+    // Axios({
+    //   url: config_url,
+    //   method: "GET",
+    //   responseType: "stream",
+    // }).then((response) => {
+    //   response.data.pipe(
+    //     fs.createWriteStream(
+    //       `./config_metadata/batch_data/${req.body.batch_name}/${temp}/config.json`
+    //     )
+    //   );
+    // });
 
     let meta_url = `https://air-client-portal-dev.make-project.fun/building/meta/${req.body.batch_list_data[i].id}`;
     Axios({
@@ -139,108 +156,6 @@ router.post("/download_batch", async (req, res) => {
         );
       });
     }
-
-    // let config_url = `https://air-client-portal-dev.make-project.fun/building/config/${req.body.batch_list_data[i].id}`;
-    // const config_response = await Axios({
-    //   url: config_url,
-    //   method: 'GET',
-    //   responseType: 'stream',
-    // });
-    // config_response.data.pipe(
-    //   fs.createWriteStream(
-    //     `./batch_data/${req.body.batch_name}/${temp}/config.json`,
-    //   ),
-    // );
-
-    // let meta_url = `https://air-client-portal-dev.make-project.fun/building/meta/${req.body.batch_list_data[i].id}`;
-    // const meta_response = await Axios({
-    //   url: meta_url,
-    //   method: 'GET',
-    //   responseType: 'stream',
-    // });
-    // meta_response.data.pipe(
-    //   fs.createWriteStream(
-    //     `./batch_data/${req.body.batch_name}/${temp}/meta.json`,
-    //   ),
-    // );
-
-    // let temp1 = req.body.batch_list_data[i].image;
-    // let image_url = `${req.body.batch_list_data[i].image}`;
-    // if (req.body.batch_list_data[i].image !== '') {
-    //   const img_response = await Axios({
-    //     url: image_url,
-    //     method: 'GET',
-    //     responseType: 'stream',
-    //   });
-    //   img_response.data.pipe(
-    //     fs.createWriteStream(
-    //       `./batch_data/${req.body.batch_name}/${temp}/${temp}.${temp1.slice(
-    //         -3,
-    //       )}`,
-    //     ),
-    //   );
-    // }
-
-    // let res1 = await https.get(
-    //   `https://air-client-portal-dev.make-project.fun/building/config/${req.body.batch_list_data[i].id}`,
-    // );
-    // let data = '',
-    //   json_data;
-    // res1.on('data', function (stream) {
-    //   data += stream;
-    // });
-    // res1.on('end', function () {
-    //   json_data = JSON.parse(data);
-    //   fs.writeFile(
-    //     `./batch_data/${req.body.batch_name}/${temp}/config.json`,
-    //     JSON.stringify(json_data, null, 2),
-    //     function (err) {
-    //       if (err) throw err;
-    //       console.log('config.json is created successfully.');
-    //     },
-    //   );
-    // });
-    // res1.on('error', function (e) {
-    //   console.log(e.message);
-    //   return res.send({ flag_success: 'error' });
-    // });
-    // const res2 = await https.get(
-    //   `https://air-client-portal-dev.make-project.fun/building/meta/${req.body.batch_list_data[i].id}`,
-    // );
-
-    // let data1 = '',
-    //   json_data1;
-    // res2.on('data', function (stream) {
-    //   data1 += stream;
-    // });
-    // res2.on('end', function () {
-    //   json_data1 = JSON.parse(data1);
-    //   fs.writeFile(
-    //     `./batch_data/${req.body.batch_name}/${temp}/meta.json`,
-    //     JSON.stringify(json_data1, null, 2),
-    //     function (err) {
-    //       if (err) throw err;
-    //       console.log('meta.json is created successfully.');
-    //     },
-    //   );
-    // });
-
-    // res2.on('error', function (e) {
-    //   console.log(e.message);
-    //   return res.send({ flag_success: 'error' });
-    // });
-    // let temp1 = req.body.batch_list_data[i].image;
-    // if (req.body.batch_list_data[i].image !== '') {
-    //   https.get(`${req.body.batch_list_data[i].image}`, res => {
-    //     res.pipe(
-    //       fs.createWriteStream(
-    //         `./batch_data/${req.body.batch_name}/${temp}/${temp}.${temp1.slice(
-    //           -3,
-    //         )}`,
-    //       ),
-    //     );
-    //   });
-    // }
   }
 
   const tempProductoin = await productionModel.find();
@@ -408,7 +323,7 @@ router.post("/generate_config", async (req, res) => {
     }
   );
   return res.send({
-    flag_success: "success"
+    flag_success: "success",
   });
 });
 
@@ -439,7 +354,7 @@ function fromDir(startPath, filter) {
   return array;
 }
 
-router.post("/get_assets", async(req, res) => {
+router.post("/get_assets", async (req, res) => {
   let dir = `./config_metadata/uploaded_batch_data/${req.body.id}/assets/`;
   // let files_img = fromDir(dir, '.jpg');
   let files_json = fromDir(dir, ".json");
@@ -448,24 +363,28 @@ router.post("/get_assets", async(req, res) => {
   for (var i = 0; i < files_json.length; i++) {
     let temp = fs.readFileSync("./" + files_json[i], "utf8");
     let jsonDate;
-      try {
-        jsonDate = JSON.parse(temp);
-      } catch (e) {
-        const newError = new errorModel({
-          production_id: req.body.id,
-          event_step: "review_batch",
-          description: `${files_json[i]} is invalid! Check it agagin!`,
-          event_date: new Date(),
-        });
-        await newError.save();
-        return res.send({
-          flag_success: "failed",
-          error_msg: `${files_json[i]}.json is invalid! Check it agagin!`,
-        });
-      }
+    try {
+      jsonDate = JSON.parse(temp);
+    } catch (e) {
+      const newError = new errorModel({
+        production_id: req.body.id,
+        event_step: "review_batch",
+        description: `${files_json[i]} is invalid! Check it agagin!`,
+        event_date: new Date(),
+      });
+      await newError.save();
+      return res.send({
+        flag_success: "failed",
+        error_msg: `${files_json[i]}.json is invalid! Check it agagin!`,
+      });
+    }
     files.push(jsonDate);
   }
-  return res.json({ flag_success: 'success', files: files, count: files_json.length });
+  return res.json({
+    flag_success: "success",
+    files: files,
+    count: files_json.length,
+  });
 });
 
 router.post("/upload_nft", async (req, res) => {
@@ -473,7 +392,7 @@ router.post("/upload_nft", async (req, res) => {
   console.log("uploading nft...");
   exec(
     `ts-node ./cli/src/candy-machine-v2-cli.ts upload -e devnet -k ~/.config/solana/devnet.json -nc -cp ./config_metadata/uploaded_batch_data/${req.body.id}/config.json -c ${req.body.id} ./config_metadata/uploaded_batch_data/${req.body.id}/assets`,
-    async(error) => {
+    async (error) => {
       const endTime = new Date();
       const exeTime = endTime - startTime;
       if (error) {
@@ -485,7 +404,7 @@ router.post("/upload_nft", async (req, res) => {
           event_date: new Date(),
         });
         await newError.save();
-        return res.json({ success: false, error_msg: error});
+        return res.json({ success: false, error_msg: error });
         // return res.json({ success: true, exeTime: exeTime });
       }
       console.log("Success uploaded NFT.");
@@ -499,7 +418,7 @@ router.post("/verify_nft", (req, res) => {
   console.log("verifying nft...");
   exec(
     `ts-node ./cli/src/candy-machine-v2-cli.ts verify_upload -e devnet -k ~/.config/solana/devnet.json -c ${req.body.id}`,
-    async(error) => {
+    async (error) => {
       const endTime = new Date();
       const exeTime = endTime - startTime;
       if (error) {
@@ -511,7 +430,7 @@ router.post("/verify_nft", (req, res) => {
           event_date: new Date(),
         });
         await newError.save();
-        return res.json({ success: false, error_msg: error});
+        return res.json({ success: false, error_msg: error });
       }
       console.log("Success verified NFT.");
       return res.json({ success: true, exeTime: exeTime });
@@ -524,7 +443,7 @@ router.post("/mint_nft", (req, res) => {
   console.log("minting nft...");
   exec(
     `ts-node ./cli/src/candy-machine-v2-cli.ts mint_multiple_tokens -e devnet -k ~/.config/solana/devnet.json -c ${req.body.id} --number ${req.body.count}`,
-    async(error) => {
+    async (error) => {
       const endTime = new Date();
       const exeTime = endTime - startTime;
       if (error) {
@@ -536,21 +455,17 @@ router.post("/mint_nft", (req, res) => {
           event_date: new Date(),
         });
         await newError.save();
-        return res.json({ success: false, error_msg: error});
+        return res.json({ success: false, error_msg: error });
       }
-      productionModel.findOneAndUpdate(
-        { production_id: req.body.id },
-        { completed: true, 'created_date':new Date().toLocaleString },
-        function (err, added) {
-          if (err) console.log(err);
-          else {
-            res.send({ flag_success: "success", id: added.production_id });
-            console.log(
-              "******** updated in mongo database successfully *********"
-            );
-          }
-        }
-      );
+      try {
+        productionModel.findOneAndUpdate(
+          { production_id: req.body.id },
+          { completed: true, created_date: new Date().toLocaleString }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+      console.log("******** updated in mongo database successfully *********");
       console.log("Success minted NFT.");
       return res.json({ success: true, exeTime: exeTime });
     }
