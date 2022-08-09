@@ -101,19 +101,27 @@ router.post("/download_batch", async (req, res) => {
     let temp = req.body.batch_list_data[i].id;
     let config_url = `https://air-client-portal-dev.make-project.fun/building/config/${req.body.batch_list_data[i].id}`;
     let tempResponse;
-    try{
-      tempResponse = await Axios({
-        url: config_url,
-        method: "GET",
-        responseType: "stream",
+    try {
+      tempResponse = await Axios.get(config_url);
+      fs.writeFileSync(
+        `./config_metadata/batch_data/${req.body.batch_name}/${temp}/config.json`,
+        JSON.stringify(tempResponse.data, null, 2)
+      );
+    } catch (error) {
+      console.log(error);
+      const newError = new errorModel({
+        production_id: req.body.id,
+        event_step: "download_batch",
+        description: `${error}`,
+        event_date: new Date(),
+      });
+      await newError.save();
+      return res.send({
+        flag_success: "failed",
+        error_msg: `Can't download ${req.body.batch_list_data[i].id}'s config json. It is invalid!`,
       });
     }
-    catch(error)
-    {
-      console.log(error);
-    }
-    console.log(tempResponse.data);
-    console.log(JSON.parse(tempResponse.data));
+
     // Axios({
     //   url: config_url,
     //   method: "GET",
@@ -126,18 +134,29 @@ router.post("/download_batch", async (req, res) => {
     //   );
     // });
 
+    let tempResponse1;
     let meta_url = `https://air-client-portal-dev.make-project.fun/building/meta/${req.body.batch_list_data[i].id}`;
-    Axios({
-      url: meta_url,
-      method: "GET",
-      responseType: "stream",
-    }).then((response) => {
-      response.data.pipe(
-        fs.createWriteStream(
-          `./config_metadata/batch_data/${req.body.batch_name}/${temp}/meta.json`
-        )
+    try {
+      tempResponse1 = await Axios.get(meta_url);
+      fs.writeFileSync(
+        `./config_metadata/batch_data/${req.body.batch_name}/${temp}/meta.json`,
+        JSON.stringify(tempResponse1.data, null, 2)
       );
-    });
+    } catch (error) {
+      console.log(error);
+      const newError = new errorModel({
+        production_id: req.body.id,
+        event_step: "download_batch",
+        description: `${error}`,
+        event_date: new Date(),
+      });
+      await newError.save();
+      return res.send({
+        flag_success: "failed",
+        error_msg: `Can't download ${req.body.batch_list_data[i].id}'s meta json. It is invalid!`,
+      });
+    }
+  
 
     let temp1 = req.body.batch_list_data[i].image;
     let image_url = `${req.body.batch_list_data[i].image}`;
