@@ -46,7 +46,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "client": "react-scripts start",
+    "client": "react-scripts --openssl-legacy-provider start",
     "server": "npm start --prefix api",
     "build": "react-scripts build",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
